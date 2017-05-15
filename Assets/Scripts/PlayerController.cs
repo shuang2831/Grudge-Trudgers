@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour {
     public bool isActive;
     public new SkinnedMeshRenderer renderer;
 
+    public bool[] isClose;
+
     public LineRenderer lightning;
 
 
@@ -29,6 +31,7 @@ public class PlayerController : MonoBehaviour {
     {
         lightning = transform.FindChild("SimpleLightningBoltPrefab" + playerNum).gameObject.GetComponent<LineRenderer>();
         lightning.enabled = false;
+        isClose = new bool[] { false, false, false, false };
     }
 
     void Start()
@@ -42,6 +45,7 @@ public class PlayerController : MonoBehaviour {
             playerIndexSet = true;
         }
 
+        //isClose = new bool[] { false, false, false, false };
         rb = GetComponent<Rigidbody>();
         isActive = true;
         renderer = GetComponentInChildren<SkinnedMeshRenderer>();
@@ -67,12 +71,12 @@ public class PlayerController : MonoBehaviour {
         {
             transform.rotation = Quaternion.LookRotation(movement, Vector3.up);
         }
-        
-        //if (Input.GetButtonDown(action) && isActive)
-        //{
-            
-        //    punishPlayerLight();
-        //}
+
+        if (Input.GetButtonDown(action) && isActive)
+        {
+
+            rewardPlayer(10);
+        }
 
         if (!isActive)
         {
@@ -142,6 +146,16 @@ public class PlayerController : MonoBehaviour {
         rb.AddExplosionForce(100f, transform.position, 5.0f, 10.0f);
     }
 
+    public void rewardPlayer(int rewardNumber)
+    {
+        int plusMinus = Random.Range(1, 6);
+
+        for (int i = 0; i < rewardNumber + plusMinus; i++)
+        {
+            GameObject coin = Instantiate(Resources.Load("coin", typeof(GameObject)), transform.position + (Vector3.up * 20) + new Vector3(0, i, 0), Random.rotation) as GameObject;
+        }
+    }
+
     public void punishPlayer()
     {
 
@@ -166,7 +180,7 @@ public class PlayerController : MonoBehaviour {
             ScoreBehavior.PlayerScores[playerNum - 1] = 0;
         }
 
-        rb.AddExplosionForce(100f, transform.position, 5.0f, 5.0f);
+        rb.AddExplosionForce(50f, transform.position, 5.0f, 5.0f);
     }
 
     public void beAbsorbed()
@@ -177,6 +191,24 @@ public class PlayerController : MonoBehaviour {
         transform.Translate(Vector3.down * 10f, Space.World);
         rb.isKinematic = true;
 
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+
+        if (other.tag == "Player")
+        {
+            isClose[other.GetComponent<PlayerController>().playerNum - 1] = true;
+        }
+    }
+
+    public void OnTriggerExit(Collider other)
+    {
+        
+        if (other.tag == "Player")
+        {
+            isClose[other.GetComponent<PlayerController>().playerNum - 1] = false;
+        }
     }
 
     /**

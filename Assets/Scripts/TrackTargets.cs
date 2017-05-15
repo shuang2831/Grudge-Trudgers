@@ -21,6 +21,7 @@ public class TrackTargets : MonoBehaviour
     Camera camera;
     private Vector3 offset;
     private Rigidbody rb;
+    private float minFov;
 
     void Awake()
     {
@@ -39,6 +40,7 @@ public class TrackTargets : MonoBehaviour
     void Start()
     {
         //offset = transform.position - player.transform.position;
+        minFov = Camera.main.fieldOfView;
     }
 
     void LateUpdate()
@@ -47,7 +49,7 @@ public class TrackTargets : MonoBehaviour
         Rect bb = CalculateTargetsBoundingBox();
         Vector3 pos = CalculateCameraPosition(bb);
 
-        if(float.IsNaN(pos.x) || float.IsNaN(pos.z))
+        if (float.IsNaN(pos.x) || float.IsNaN(pos.z))
         {
             transform.position = new Vector3(0, 20, 0);
             Camera.main.fieldOfView = 100;
@@ -56,23 +58,29 @@ public class TrackTargets : MonoBehaviour
         {
             transform.position = pos;
         }
-        
-		Vector3 min = camera.WorldToScreenPoint(new Vector3(bb.min.x, 0, bb.min.y) );
+
+        Vector3 min = camera.WorldToScreenPoint(new Vector3(bb.min.x, 0, bb.min.y));
         Vector3 max = camera.WorldToScreenPoint(new Vector3(bb.max.x, 0, bb.max.y));
 
         //Debug.Log(bb.size);
         //Debug.Log("min: " + min);
         //Debug.Log("max: " + max);
 
-        if (min.x < 50 || min.y < 50  || max.x > Screen.width - 50 || max.y > Screen.height - 50)
+        if (min.x < 100 || min.y < 100 || max.x > Screen.width - 100 || max.y > Screen.height - 100)
         {
+
             Camera.main.fieldOfView += 0.2f;
+
         }
         else if (min.x > 600 || min.y > 600 || max.x < Screen.width - 600 || max.y < Screen.height - 600)
         {
-            Camera.main.fieldOfView -= 0.1f;
-        }
+            if (Camera.main.fieldOfView > minFov)
+            {
+               Camera.main.fieldOfView -= 0.2f;
 
+            }
+
+        }
     }
 
     void Update()

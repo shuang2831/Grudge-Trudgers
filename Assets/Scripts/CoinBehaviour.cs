@@ -8,6 +8,7 @@ public class CoinBehaviour : MonoBehaviour {
     public GameObject[] enemies;
     private float dist;
     private float coinSpeed;
+    private bool isColliding;
 
     // Use this for initialization
     void Start () {
@@ -24,6 +25,9 @@ public class CoinBehaviour : MonoBehaviour {
             Physics.IgnoreCollision(enemy.GetComponent<CapsuleCollider>(), GetComponent<BoxCollider>());
             Physics.IgnoreCollision(enemy.GetComponent<BoxCollider>(), GetComponent<BoxCollider>());
         }
+        isColliding = false;
+
+        
     }
 	
 	// Update is called once per frame
@@ -36,10 +40,16 @@ public class CoinBehaviour : MonoBehaviour {
                 transform.position = Vector3.MoveTowards(transform.position, player.transform.position, Time.deltaTime * 5);
             }
         }
+        isColliding = false;
     }
 
     void OnTriggerEnter(Collider player)
     {
+        if (isColliding || player.isTrigger)
+        {
+            return;
+        }
+        isColliding = true;
         if(player.gameObject.tag == "Player" && player.GetComponent<PlayerController>().isActive && !player.GetComponent<Rigidbody>().isKinematic)
         {
             ScoreBehavior.PlayerScores[player.gameObject.GetComponent<PlayerController>().playerNum - 1] = ScoreBehavior.PlayerScores[player.gameObject.GetComponent<PlayerController>().playerNum - 1] + 1;
