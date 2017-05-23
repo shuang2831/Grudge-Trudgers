@@ -20,8 +20,8 @@ public class UIBehaviour : MonoBehaviour
         Timer = -99f;
         timeEnd = false;
         textFields = GetComponentsInChildren<Text>();
-        uiTimer = 30;
-        getText("Timer").text = uiTimer.ToString();
+        uiTimer = float.MaxValue;
+        //getText("Timer").text = "Timer";
 
     }
 
@@ -40,8 +40,8 @@ public class UIBehaviour : MonoBehaviour
             
             StartCoroutine(FadeTextToZeroAlpha(1f, getText("Instructions")));
             timeEnd = false;
-            uiTimer = 30f;
-            startTimer();
+            //uiTimer = 30f;
+            //startTimer();
         }
        
         if (countdown && uiTimer > 0)
@@ -77,17 +77,18 @@ public class UIBehaviour : MonoBehaviour
         return null;
     }
 
-    public void setInstructions(string t)
+    public void setInstructions(string t, float time = 5.0f)
     {
         getText("Instructions").text = t;
-        Timer = 5f;
+        Timer = time;
         timeEnd = true;
         StartCoroutine(FadeTextToFullAlpha(1f, getText("Instructions")));
 
     }
 
-    public void startTimer()
+    public void startTimer(float limit = 30f)
     {
+        uiTimer = limit;
         countdown = true;
     }
 
