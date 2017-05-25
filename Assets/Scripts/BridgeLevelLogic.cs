@@ -24,7 +24,7 @@ public class BridgeLevelLogic : MonoBehaviour
         UIcanvas = GameObject.FindGameObjectWithTag("UI").GetComponent<UIBehaviour>();
         
         isCutscene = true;
-        openTimer = 10f;
+        openTimer = 8f;
         closingTimer = 10f;
         openingScene();
         uiState = "begin";
@@ -60,7 +60,7 @@ public class BridgeLevelLogic : MonoBehaviour
             {
                 foreach (GameObject player in players)
                 {
-                    player.transform.Translate(Vector3.forward * Time.deltaTime * 2.5f);
+                    player.transform.Translate(Vector3.forward * Time.deltaTime * 2f);
 
                 }
             }
@@ -68,21 +68,21 @@ public class BridgeLevelLogic : MonoBehaviour
 
             openTimer -= Time.deltaTime;
 
-            if (openTimer < 8 && uiState == "begin")
+            if (openTimer < 6 && uiState == "begin")
             {
                 uiState = "text1";
-                UIcanvas.setInstructions("Watch out for the blob! It will grow and grow while chasing the closest player. ");
+                UIcanvas.setInstructions("Cross the Bridge and don't be blown off.");
 
             }
 
-            else if (openTimer < 4 && uiState == "text1")
+            /* else if (openTimer < 4 && uiState == "text1")
             {
                 uiState = "text2";
                 UIcanvas.setInstructions("But you can make him shrink from shyness if at least 2 of you stare at him! You have 30 seconds to survive.");
 
-            }
+            }  */
 
-            else if (openTimer < 0 && uiState == "text2")
+            else if (openTimer < 0 && uiState == "text1")
             {
                 isCutscene = false;
                 foreach (GameObject player in players)

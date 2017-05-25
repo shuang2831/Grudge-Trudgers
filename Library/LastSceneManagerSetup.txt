@@ -1,8 +1,4 @@
 sceneSetups:
-<<<<<<< HEAD
 - path: Assets/_Scenes/Bridge Level.unity
-=======
-- path: Assets/_Scenes/Backstab Level.unity
->>>>>>> a98d431035778a4ddcf10e85934bf6d2088cc182
   isLoaded: 1
   isActive: 1
