@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2017
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grudge-Trudgers", "Grudge-Trudgers.csproj", "{78BF7802-70E3-328F-A03B-8EF761A9A66C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grudge-Trudgers.Editor", "Grudge-Trudgers.Editor.csproj", "{B406F128-35A2-1D96-8CF2-1EA0A279B29C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{78BF7802-70E3-328F-A03B-8EF761A9A66C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78BF7802-70E3-328F-A03B-8EF761A9A66C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78BF7802-70E3-328F-A03B-8EF761A9A66C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78BF7802-70E3-328F-A03B-8EF761A9A66C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B406F128-35A2-1D96-8CF2-1EA0A279B29C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B406F128-35A2-1D96-8CF2-1EA0A279B29C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B406F128-35A2-1D96-8CF2-1EA0A279B29C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B406F128-35A2-1D96-8CF2-1EA0A279B29C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
