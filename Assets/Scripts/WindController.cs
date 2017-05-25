@@ -9,7 +9,6 @@ public class WindController : MonoBehaviour {
 
     private float TimeSinceStart = 0;
     private float TimeToCycle = 3f;
-    private float randomTime = Random.Range(3, 5);
     //private Rigidbody rb;
 
 
@@ -21,7 +20,7 @@ public class WindController : MonoBehaviour {
     {
         ps = GetComponent<ParticleSystem>();
         Debug.Log(string.Format("Started"));
-        ps.Play();
+        ps.Stop();
         //Physics.IgnoreCollision(GetComponent<CapsuleCollider>(), GameObject.FindGameObjectWithTag("Player").GetComponent<CapsuleCollider>());
     }
     // Use this for initialization
@@ -48,10 +47,14 @@ public class WindController : MonoBehaviour {
             if(ps.isPlaying)
             {
                 ps.Stop();
+                Debug.Log(string.Format("IsPlaying?: {0}", ps.isPlaying));
+
             }
             else
             {
                 ps.Play();
+                Debug.Log(string.Format("IsPlaying?: {0}", ps.isPlaying));
+
             }
             TimeSinceStart = 0;
         }
