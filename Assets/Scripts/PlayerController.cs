@@ -27,11 +27,14 @@ public class PlayerController : MonoBehaviour {
 
     Coroutine coFlash;
 
+    public bool slipping;
+
     void Awake()
     {
         lightning = transform.Find("SimpleLightningBoltPrefab" + playerNum).gameObject.GetComponent<LineRenderer>();
         lightning.enabled = false;
         isClose = new bool[] { false, false, false, false };
+        slipping = false;
     }
 
     void Start()
@@ -104,8 +107,11 @@ public class PlayerController : MonoBehaviour {
         }
         Vector3 xMove = xinputMovement.normalized * speed;
         Vector3 Move = movement.normalized * speed;
-        rb.velocity = new Vector3(xMove.x, rb.velocity.y, xMove.z);
- 
+
+        if (!slipping)
+        {
+            rb.velocity = new Vector3(Move.x, rb.velocity.y, Move.z);
+        }
 
 
 

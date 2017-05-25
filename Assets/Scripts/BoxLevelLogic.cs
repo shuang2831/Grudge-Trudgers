@@ -43,7 +43,7 @@ public class BoxLevelLogic : MonoBehaviour
 
                 RaycastHit hit;
 
-                if (Physics.Raycast(player.transform.position, (player.transform.forward), out hit, 2))
+                if (Physics.Raycast(player.transform.position, (player.transform.forward), out hit, 2f))
                 {
                     //Debug.Log(hit.collider.transform.parent.gameObject.tag);
                     //Debug.Log(player.transform.forward);
@@ -53,7 +53,7 @@ public class BoxLevelLogic : MonoBehaviour
 
                         if (hit.collider.transform.parent.gameObject.tag == "box")
                         {
-                            Debug.Log("seen");
+                           
                             if (player.GetComponent<PlayerController>().prevState.Buttons.A == ButtonState.Released && player.GetComponent<PlayerController>().state.Buttons.A == ButtonState.Pressed)
                             {
                                 if (Vector3.Dot(player.transform.forward, Vector3.right) > 0.3f)
@@ -157,7 +157,7 @@ public class BoxLevelLogic : MonoBehaviour
                     player.GetComponent<PlayerController>().enabled = true;
 
                 }
-                UIcanvas.startTimer(30f);
+                UIcanvas.startTimer(1000f);
                 uiState = "gameplay";
 
 

@@ -115,6 +115,9 @@
     <Reference Include="XInputDotNetPure">
       <HintPath>Assets\XInputDotNet\Plugins\XInputDotNetPure.dll</HintPath>
     </Reference>
+    <Reference Include="Assembly-UnityScript">
+      <HintPath>Library\ScriptAssemblies\Assembly-UnityScript.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Grudge-Trudgers.csproj">
@@ -128,6 +131,7 @@
   <ItemGroup>
     <None Include="Assets\Fonts\Documentation\JazzCreateAltKeys_BubbleFont.txt" />
     <None Include="Assets\Fonts\Documentation\JazzCreateBubble_VersionHistory_1.1.txt" />
+    <None Include="Assets\Fonts\Lecompte\Lecompte.fnt" />
     <None Include="Assets\LightningBolt\Readme.txt" />
     <None Include="Assets\Simple Scene Fade Load System\ReadMeFirst.txt" />
     <None Include="Assets\XInputDotNet\Docs.txt" />

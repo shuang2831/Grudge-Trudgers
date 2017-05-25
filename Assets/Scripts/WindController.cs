@@ -8,7 +8,8 @@ public class WindController : MonoBehaviour {
     private Transform[] targets;
 
     private float TimeSinceStart = 0;
-    private float TimeToCycle = 5f;
+    private float TimeToCycle = 3f;
+    private float randomTime = Random.Range(3, 5);
     //private Rigidbody rb;
 
 
@@ -20,9 +21,8 @@ public class WindController : MonoBehaviour {
     {
         ps = GetComponent<ParticleSystem>();
         Debug.Log(string.Format("Started"));
-        ps.Stop();
+        ps.Play();
         //Physics.IgnoreCollision(GetComponent<CapsuleCollider>(), GameObject.FindGameObjectWithTag("Player").GetComponent<CapsuleCollider>());
-        
     }
     // Use this for initialization
     void Start () {
@@ -35,6 +35,7 @@ public class WindController : MonoBehaviour {
         {
             targets[i] = players[i].transform;
         }
+
 
         //rb = GetComponent<Rigidbody>();
     }
@@ -100,7 +101,7 @@ public class WindController : MonoBehaviour {
         if(collision.gameObject.tag == "Player" && ps.isPlaying)
         {
            
-            collision.gameObject.transform.Translate(-Vector3.forward * Time.deltaTime * 5.0f,Space.World);
+            collision.gameObject.transform.Translate(-Vector3.forward * Time.deltaTime * 9.0f,Space.World);
             //Debug.Log(-Vector3.forward);
            
         }
