@@ -154,6 +154,8 @@ public class PaintLevelLogic : MonoBehaviour
 
         terr.splatPrototypes[0].texture.Apply();
 
+
+        
         if (uiState == "gameplay")
         {
            
@@ -197,7 +199,7 @@ public class PaintLevelLogic : MonoBehaviour
                     player.GetComponent<PlayerController>().enabled = true;
 
                 }
-
+                UIcanvas.startTimer(30);
                 uiState = "gameplay";
 
 
