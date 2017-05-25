@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour {
 
     void Awake()
     {
-        lightning = transform.FindChild("SimpleLightningBoltPrefab" + playerNum).gameObject.GetComponent<LineRenderer>();
+        lightning = transform.Find("SimpleLightningBoltPrefab" + playerNum).gameObject.GetComponent<LineRenderer>();
         lightning.enabled = false;
         isClose = new bool[] { false, false, false, false };
     }
@@ -66,17 +66,17 @@ public class PlayerController : MonoBehaviour {
         Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
         Vector3 xinputMovement = new Vector3(xinputHorizontal, 0.0f, xinputVertical);
 
-        rb.velocity = movement.normalized * speed;
+        
         if (moveHorizontal != 0 || moveVertical != 0)
         {
             transform.rotation = Quaternion.LookRotation(movement, Vector3.up);
         }
 
-        if (Input.GetButtonDown(action) && isActive)
-        {
+        //if (Input.GetButtonDown(action) && isActive)
+        //{
 
-            rewardPlayer(10);
-        }
+        //    rewardPlayer(10);
+        //}
 
         if (!isActive)
         {
@@ -97,14 +97,18 @@ public class PlayerController : MonoBehaviour {
             }
         }
         
-        rb.velocity = xinputMovement.normalized * speed;
+        
         if (xinputHorizontal != 0 || xinputVertical != 0)
         {
             transform.rotation = Quaternion.LookRotation(xinputMovement, Vector3.up);
         }
-     
+        Vector3 xMove = xinputMovement.normalized * speed;
+        Vector3 Move = movement.normalized * speed;
+        rb.velocity = new Vector3(xMove.x, rb.velocity.y, xMove.z);
  
-        
+
+
+
 
     }
 
@@ -158,6 +162,8 @@ public class PlayerController : MonoBehaviour {
 
     public void punishPlayer()
     {
+        startFlash();
+        isActive = false;
 
         int plusMinus = Random.Range(1, 6);
 
