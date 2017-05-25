@@ -88,6 +88,7 @@
     <Compile Include="Assets\Scripts\Bloblevellogic.cs" />
     <Compile Include="Assets\Scripts\BoxBehaviour.cs" />
     <Compile Include="Assets\Scripts\BoxLevelLogic.cs" />
+    <Compile Include="Assets\Scripts\BridgeLevelLogic.cs" />
     <Compile Include="Assets\Scripts\ButtonBehaviour.cs" />
     <Compile Include="Assets\Scripts\ButtonLevelLogic.cs" />
     <Compile Include="Assets\Scripts\CoinBehaviour.cs" />
@@ -104,10 +105,13 @@
     <Compile Include="Assets\Scripts\RewardLevelLogic.cs" />
     <Compile Include="Assets\Scripts\ScoreBehavior.cs" />
     <Compile Include="Assets\Scripts\SelectOnInput.cs" />
+    <Compile Include="Assets\Scripts\SoccerGoalBehaviour.cs" />
+    <Compile Include="Assets\Scripts\SoccerLevelLogic.cs" />
     <Compile Include="Assets\Scripts\SpeechBubbleRotate.cs" />
     <Compile Include="Assets\Scripts\TerrainPaintLogic.cs" />
     <Compile Include="Assets\Scripts\TrackTargets.cs" />
     <Compile Include="Assets\Scripts\UIBehaviour.cs" />
+    <Compile Include="Assets\Scripts\WindController.cs" />
     <Compile Include="Assets\Simple Scene Fade Load System\Demo (You don&apos;t have to import this folder)\DemoScript.cs" />
     <Compile Include="Assets\Simple Scene Fade Load System\Scripts\Fader.cs" />
     <Compile Include="Assets\Simple Scene Fade Load System\Scripts\Initiate.cs" />
