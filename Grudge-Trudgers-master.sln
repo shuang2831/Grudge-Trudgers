@@ -1,7 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2017
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grudge-Trudgers-master.Plugins", "Grudge-Trudgers-master.Plugins.csproj", "{D29D2647-F3CA-51D3-01C3-428D7377C46C}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grudge-Trudgers-master", "Grudge-Trudgers-master.csproj", "{29C5E232-F932-B8E7-20F0-A4A9963F75C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grudge-Trudgers-master.Editor.Plugins", "Grudge-Trudgers-master.Editor.Plugins.csproj", "{CA47A75A-4672-19D1-47FA-1854E523F4B2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grudge-Trudgers-master.Editor", "Grudge-Trudgers-master.Editor.csproj", "{83ADD8FA-F9C0-5E15-3374-577AE5A76C3D}"
 EndProject
@@ -11,10 +15,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D29D2647-F3CA-51D3-01C3-428D7377C46C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D29D2647-F3CA-51D3-01C3-428D7377C46C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D29D2647-F3CA-51D3-01C3-428D7377C46C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D29D2647-F3CA-51D3-01C3-428D7377C46C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{29C5E232-F932-B8E7-20F0-A4A9963F75C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{29C5E232-F932-B8E7-20F0-A4A9963F75C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29C5E232-F932-B8E7-20F0-A4A9963F75C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29C5E232-F932-B8E7-20F0-A4A9963F75C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA47A75A-4672-19D1-47FA-1854E523F4B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA47A75A-4672-19D1-47FA-1854E523F4B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA47A75A-4672-19D1-47FA-1854E523F4B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA47A75A-4672-19D1-47FA-1854E523F4B2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{83ADD8FA-F9C0-5E15-3374-577AE5A76C3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{83ADD8FA-F9C0-5E15-3374-577AE5A76C3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83ADD8FA-F9C0-5E15-3374-577AE5A76C3D}.Release|Any CPU.ActiveCfg = Release|Any CPU

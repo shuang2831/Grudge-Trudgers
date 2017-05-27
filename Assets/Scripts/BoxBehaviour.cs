@@ -47,9 +47,64 @@ public class BoxBehaviour : MonoBehaviour {
         //rb.MovePosition(dirVector * Time.deltaTime);
         //if (Input.GetKeyDown("space"))
         //{
-            
+
         //    pushBox("right");
         //}
+        RaycastHit uhit;
+
+        if (Physics.Raycast(transform.position, Vector3.forward, out uhit, 0.8f))
+        {
+            if (uhit.collider.gameObject.tag == "box")
+            {
+                boxUp = true;
+            }
+        }
+        else
+        {
+            boxUp = false;
+        }
+
+        RaycastHit rhit;
+
+        if (Physics.Raycast(transform.position, Vector3.right, out rhit, 0.8f))
+        {
+            if (rhit.collider.gameObject.tag == "box")
+            {
+                boxRight = true;
+            }
+        }
+        else
+        {
+            boxRight = false;
+        }
+
+        RaycastHit dhit;
+
+        if (Physics.Raycast(transform.position, Vector3.back, out dhit, 0.8f))
+        {
+            if (dhit.collider.gameObject.tag == "box")
+            {
+                boxDown = true;
+            }
+        }
+        else
+        {
+            boxDown = false;
+        }
+
+        RaycastHit lhit;
+
+        if (Physics.Raycast(transform.position, Vector3.left, out lhit, 0.8f))
+        {
+            if (lhit.collider.gameObject.tag == "box")
+            {
+                boxLeft = true;
+            }
+        }
+        else
+        {
+            boxLeft = false;
+        }
     }
 
     public void pushBox(string dir)
@@ -109,42 +164,45 @@ public class BoxBehaviour : MonoBehaviour {
     {
         if (other.gameObject.tag == "box" || other.gameObject.tag == "plane")
         {
-            if (Mathf.Abs(other.transform.position.x - transform.position.x) > Mathf.Abs(other.transform.position.z - transform.position.z))
-            {
 
-                if (other.transform.position.x > transform.position.x)
-                {
-                    boxRight = true;
-                    boxLeft = false;
-                }
-                else
-                {
-                    boxLeft = true;
-                    boxRight = false;
-                }
-            }
-            else
-            {
+            
+            //    if (Mathf.Abs(other.transform.position.x - transform.position.x) > Mathf.Abs(other.transform.position.z - transform.position.z))
+            //    {
 
-                if (other.transform.position.z > transform.position.z)
-                {
-                    boxUp = true;
-                    boxDown = false;
-                }
-                else
-                {
-                    boxDown = true;
-                    boxUp = false;
-                }
-            }
+            //        if (other.transform.position.x > transform.position.x)
+            //        {
+            //            boxRight = true;
 
-        }
-        else
-        {
-            boxRight = false;
-            boxLeft = false;
-            boxUp = false;
-            boxDown = false;
+            //        }
+            //        else
+            //        {
+            //            boxLeft = true;
+
+            //        }
+            //    }
+            //    else
+            //    {
+
+            //        if (other.transform.position.z > transform.position.z)
+            //        {
+            //            boxUp = true;
+
+            //        }
+            //        else
+            //        {
+            //            boxDown = true;
+
+            //        }
+            //    }
+
+            //}
+            //else
+            //{
+            //    boxRight = false;
+            //    boxLeft = false;
+            //    boxUp = false;
+            //    boxDown = false;
+
         }
     }
 }

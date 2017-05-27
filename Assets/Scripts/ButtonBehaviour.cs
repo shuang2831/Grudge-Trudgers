@@ -26,7 +26,7 @@ public class ButtonBehaviour : MonoBehaviour {
                 {
                     if (player.GetComponent<PlayerController>().prevState.Buttons.A == ButtonState.Released && player.gameObject.GetComponent<PlayerController>().state.Buttons.A == ButtonState.Pressed)
                     {
-                        Vector3 p = new Vector3(Random.Range(-10.0f, 10.0f), 0, Random.Range(-10.0f, 10.0f));
+                        Vector3 p = new Vector3(Random.Range(-5.0f, 5.0f), 0, Random.Range(-5.0f, 5.0f));
                         Instantiate (enemy, p, Quaternion.identity);
                     }
                 }
