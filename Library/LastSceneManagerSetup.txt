@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/_Scenes/Bridge Level.unity
+- path: Assets/_Scenes/SpikeLevel.unity
   isLoaded: 1
   isActive: 1

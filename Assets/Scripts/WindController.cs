@@ -7,7 +7,7 @@ public class WindController : MonoBehaviour {
     private GameObject[] players;
     private Transform[] targets;
 
-    private float TimeSinceStart = 0;
+    public float TimeSinceStart = 0;
     private float TimeToCycle = 3f;
     //private Rigidbody rb;
 

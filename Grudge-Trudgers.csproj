@@ -106,6 +106,7 @@
     <Compile Include="Assets\Scripts\ScoreBehavior.cs" />
     <Compile Include="Assets\Scripts\SelectOnInput.cs" />
     <Compile Include="Assets\Scripts\SpeechBubbleRotate.cs" />
+    <Compile Include="Assets\Scripts\SpikeController.cs" />
     <Compile Include="Assets\Scripts\TerrainPaintLogic.cs" />
     <Compile Include="Assets\Scripts\TrackTargets.cs" />
     <Compile Include="Assets\Scripts\UIBehaviour.cs" />
