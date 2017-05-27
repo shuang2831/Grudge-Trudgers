@@ -24,7 +24,7 @@ public class BridgeLevelLogic : MonoBehaviour
         UIcanvas = GameObject.FindGameObjectWithTag("UI").GetComponent<UIBehaviour>();
         
         isCutscene = true;
-        openTimer = 8f;
+        openTimer = 5f;
         closingTimer = 10f;
         openingScene();
         uiState = "begin";
@@ -56,7 +56,7 @@ public class BridgeLevelLogic : MonoBehaviour
 
         if (isCutscene)
         {
-            if (openTimer > 5)
+            if (openTimer > 2)
             {
                 foreach (GameObject player in players)
                 {
@@ -68,7 +68,7 @@ public class BridgeLevelLogic : MonoBehaviour
 
             openTimer -= Time.deltaTime;
 
-            if (openTimer < 6 && uiState == "begin")
+            if (openTimer < 2 && uiState == "begin")
             {
                 uiState = "text1";
                 UIcanvas.setInstructions("Cross the Bridge and don't be blown off.");

@@ -122,7 +122,7 @@ public class PlayerController : MonoBehaviour {
         if (!slipping)
         {
             rb.velocity = new Vector3(xMove.x, rb.velocity.y, xMove.z);
-            //anim.Play("Walk");
+
         }
 
 

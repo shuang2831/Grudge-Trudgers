@@ -6,9 +6,9 @@ public class WindController : MonoBehaviour {
 
     private GameObject[] players;
     private Transform[] targets;
-
+    private bool isActive;
     private float TimeSinceStart = 0;
-    private float TimeToCycle = 3f;
+    public float TimeToCycle;
     //private Rigidbody rb;
 
 
@@ -25,10 +25,11 @@ public class WindController : MonoBehaviour {
     }
     // Use this for initialization
     void Start () {
-      
+        
         players = GameObject.FindGameObjectsWithTag("Player");
 
         targets = new Transform[players.Length];
+        isActive = false;
 
         for (int i = 0; i < targets.Length; ++i)
         {
@@ -42,21 +43,10 @@ public class WindController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         TimeSinceStart = TimeSinceStart + Time.deltaTime;
-        if(TimeSinceStart > TimeToCycle)
+        if(TimeSinceStart >= TimeToCycle && !isActive)
         {
-            if(ps.isPlaying)
-            {
-                ps.Stop();
-                Debug.Log(string.Format("IsPlaying?: {0}", ps.isPlaying));
-
-            }
-            else
-            {
-                ps.Play();
-                Debug.Log(string.Format("IsPlaying?: {0}", ps.isPlaying));
-
-            }
-            TimeSinceStart = 0;
+            isActive = true;
+            startDelay();
         }
 	}
 
@@ -96,7 +86,7 @@ public class WindController : MonoBehaviour {
             Debug.Log(string.Format("IsPlaying?: {0}", ps.isPlaying));
             
         }
-        yield return new WaitForSecondsRealtime(20f);
+        yield return new WaitForSecondsRealtime(3f);
     }
 
     private void OnTriggerStay(Collider collision)
