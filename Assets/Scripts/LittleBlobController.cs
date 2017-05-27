@@ -201,7 +201,7 @@ public class LittleBlobController : MonoBehaviour
     public void die()
     {
 
-        ps.Emit(5);
+        ps.Emit(1);
         transform.position = new Vector3(0, -10, 0);
         Destroy(gameObject, 3f);
 

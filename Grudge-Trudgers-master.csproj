@@ -87,6 +87,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\FireExplosionVFX\Scripts\FxSplash.cs" />
+    <Compile Include="Assets\FireExplosionVFX\Scripts\LaunchEffect.cs" />
     <Compile Include="Assets\Fonts\Script\scriptTexttest.cs" />
     <Compile Include="Assets\LightningBolt\LightningBoltScript.cs" />
     <Compile Include="Assets\Scripts\BackstabLevelLogic.cs" />
@@ -97,8 +99,11 @@
     <Compile Include="Assets\Scripts\BridgeLevelLogic.cs" />
     <Compile Include="Assets\Scripts\ButtonBehaviour.cs" />
     <Compile Include="Assets\Scripts\ButtonLevelLogic.cs" />
+    <Compile Include="Assets\Scripts\ChoiceTagLogic.cs" />
+    <Compile Include="Assets\Scripts\ChoiceTagLogic_Prison.cs" />
     <Compile Include="Assets\Scripts\CoinBehaviour.cs" />
     <Compile Include="Assets\Scripts\DillemaLevelLogic.cs" />
+    <Compile Include="Assets\Scripts\EndLevelLogic.cs" />
     <Compile Include="Assets\Scripts\GoalLogic.cs" />
     <Compile Include="Assets\Scripts\HuddleLevelLogic.cs" />
     <Compile Include="Assets\Scripts\IceLevelLogic.cs" />
@@ -106,6 +111,7 @@
     <Compile Include="Assets\Scripts\LittleBlobController.cs" />
     <Compile Include="Assets\Scripts\LoadSceneOnClick.cs" />
     <Compile Include="Assets\Scripts\MazeLevelLogic.cs" />
+    <Compile Include="Assets\Scripts\OpeningLevelLogic.cs" />
     <Compile Include="Assets\Scripts\PaintLevelLogic.cs" />
     <Compile Include="Assets\Scripts\PickSidesLevelLogic.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
@@ -123,6 +129,9 @@
     <Compile Include="Assets\Simple Scene Fade Load System\Scripts\Fader.cs" />
     <Compile Include="Assets\Simple Scene Fade Load System\Scripts\Initiate.cs" />
     <Compile Include="Assets\XInputDotNet\Examples\XInputTestCS.cs" />
+    <Compile Include="Assets\torch\scene\script\TorchSlider.cs" />
+    <Compile Include="Assets\torch\scene\script\Torchslider2.cs" />
+    <Compile Include="Assets\torch\scripts\Torchelight.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Fonts\Documentation\JazzCreateAltKeys_BubbleFont.txt" />
@@ -145,6 +154,7 @@
     <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonLitOutline.shader" />
     <None Include="Assets\XInputDotNet\Docs.txt" />
     <None Include="Assets\XInputDotNet\MITLicense.txt" />
+    <None Include="Assets\torch\readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

@@ -26,8 +26,8 @@ public class HuddleLevelLogic : MonoBehaviour
         UIcanvas = GameObject.FindGameObjectWithTag("UI").GetComponent<UIBehaviour>();
 
         isCutscene = true;
-        openTimer = 10f;
-        closingTimer = 10f;
+        openTimer = 5f;
+        closingTimer = 5f;
         openingScene();
         uiState = "begin";
         freezing = new bool[] { false, false, false, false };
@@ -69,7 +69,7 @@ public class HuddleLevelLogic : MonoBehaviour
 
                 if (!frozen[player.GetComponent<PlayerController>().playerNum - 1])
                 {
-                    Debug.Log(player.GetComponent<PlayerController>().isClose);
+                    
                     int numClose = 1;
 
                     for (int i = 0; i < 4; i++)
@@ -119,7 +119,7 @@ public class HuddleLevelLogic : MonoBehaviour
 
         if (isCutscene)
         {
-            if (openTimer > 8)
+            if (openTimer > 3)
             {
                 foreach (GameObject player in players)
                 {
@@ -131,17 +131,17 @@ public class HuddleLevelLogic : MonoBehaviour
 
             openTimer -= Time.deltaTime;
 
-            if (openTimer < 8 && uiState == "begin")
-            {
-                uiState = "text1";
-                UIcanvas.setInstructions("It's a cold day outside, huddle for warmth!");
+            //if (openTimer < 8 && uiState == "begin")
+            //{
+            //    uiState = "text1";
+            //    UIcanvas.setInstructions("It's a cold day outside, huddle for warmth!");
 
-            }
+            //}
 
-            else if (openTimer < 4 && uiState == "text1")
+            if (openTimer < 3 && uiState == "begin")
             {
                 uiState = "text2";
-                UIcanvas.setInstructions("Be left alone and you'll freeze!");
+                UIcanvas.setInstructions("Huddle for warmth!");
 
             }
 
@@ -162,7 +162,7 @@ public class HuddleLevelLogic : MonoBehaviour
             }
         }
 
-        if (UIcanvas.uiTimer <= 0 && !isClosing)
+        if (UIcanvas.uiTimer <= 0 && !isClosing && uiState == "gameplay")
         {
             isClosing = true;
             uiState = "punish";
@@ -176,8 +176,15 @@ public class HuddleLevelLogic : MonoBehaviour
 
         if (closingTimer < 0 && isClosing)
         {
-            Initiate.Fade("PickSides Level", Color.black, 2f);
+            uiState = "nextLevel";
             isClosing = false;
+            ScoreBehavior.levels.RemoveAt(0);
+            if (ScoreBehavior.levels.Count == 0) { Initiate.Fade("End Level", Color.black, 2f); }
+            else
+            {
+                string nextLevel = ScoreBehavior.levels[0];
+                Initiate.Fade(nextLevel, Color.black, 2f);
+            }
         }
     }
     private void openingScene()

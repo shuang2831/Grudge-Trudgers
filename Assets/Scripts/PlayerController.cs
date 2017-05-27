@@ -29,12 +29,15 @@ public class PlayerController : MonoBehaviour {
 
     public bool slipping;
 
+    Animator anim;
+
     void Awake()
     {
         lightning = transform.Find("SimpleLightningBoltPrefab" + playerNum).gameObject.GetComponent<LineRenderer>();
         lightning.enabled = false;
         isClose = new bool[] { false, false, false, false };
         slipping = false;
+        anim = GetComponent<Animator>();
     }
 
     void Start()
@@ -57,8 +60,8 @@ public class PlayerController : MonoBehaviour {
 
     void FixedUpdate()
     {
+        anim.Play("Idle");
 
-    
         // Get input movement directions
         float moveHorizontal = Input.GetAxisRaw(horizontalMove);
         float moveVertical = Input.GetAxisRaw(verticalMove);
@@ -90,13 +93,16 @@ public class PlayerController : MonoBehaviour {
             if (timeLimit <= 0.0)
             {
                 isActive = true;
-                StopCoroutine(coFlash);
+                if (coFlash != null)
+                {
+                    StopCoroutine(coFlash);
+                }
                 renderer.enabled = true; // make sure renderer is on
                 timeLimit = 3.0f;
             }
             else
             {
-                timeLimit -= Time.deltaTime;
+                timeLimit -= Time.deltaTime;    
             }
         }
         
@@ -108,10 +114,17 @@ public class PlayerController : MonoBehaviour {
         Vector3 xMove = xinputMovement.normalized * speed;
         Vector3 Move = movement.normalized * speed;
 
+        if (xMove == Vector3.zero)
+        {
+            anim.Play("Idle");
+        }
+
         if (!slipping)
         {
-            rb.velocity = new Vector3(Move.x, rb.velocity.y, Move.z);
+            rb.velocity = new Vector3(xMove.x, rb.velocity.y, xMove.z);
+            //anim.Play("Walk");
         }
+
 
 
 

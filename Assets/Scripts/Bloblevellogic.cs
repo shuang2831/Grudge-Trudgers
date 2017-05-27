@@ -26,8 +26,8 @@ public class Bloblevellogic : MonoBehaviour
         UIcanvas = GameObject.FindGameObjectWithTag("UI").GetComponent<UIBehaviour>();
         
         isCutscene = true;
-        openTimer = 10f;
-        closingTimer = 10f;
+        openTimer = 5f;
+        closingTimer = 5f;
         openingScene();
         uiState = "begin";
 
@@ -57,7 +57,7 @@ public class Bloblevellogic : MonoBehaviour
     {
         if (isCutscene)
         {
-            if (openTimer > 5)
+            if (openTimer > 3)
             {
                 foreach (GameObject player in players)
                 {
@@ -69,17 +69,17 @@ public class Bloblevellogic : MonoBehaviour
 
             openTimer -= Time.deltaTime;
 
-            if (openTimer < 8 && uiState == "begin")
-            {
-                uiState = "text1";
-                UIcanvas.setInstructions("Watch out for the blob! It will grow and grow while chasing the closest player. ");
+            //if (openTimer < 8 && uiState == "begin")
+            //{
+            //    uiState = "text1";
+            //    UIcanvas.setInstructions("Watch out for the blob! It will grow and grow while chasing the closest player. ");
 
-            }
+            //}
 
-            else if (openTimer < 4 && uiState == "text1")
+            if (openTimer < 3 && uiState == "begin")
             {
                 uiState = "text2";
-                UIcanvas.setInstructions("But you can make him shrink from shyness if at least 2 of you stare at him! You have 30 seconds to survive.");
+                UIcanvas.setInstructions("Don't get eaten by the bashful blob!");
 
             }
 
@@ -95,10 +95,13 @@ public class Bloblevellogic : MonoBehaviour
 
                 enemy.GetComponent<BlobController>().enabled = true;
 
+                uiState = "gameplay";
+                UIcanvas.startTimer(30f);
+
             }
         }
 
-       if (UIcanvas.uiTimer <= 0 && !isClosing)
+       if (UIcanvas.uiTimer <= 0 && !isClosing && uiState == "gameplay")
         {
             isClosing = true;
             enemy.GetComponent<BlobController>().die();
@@ -111,7 +114,15 @@ public class Bloblevellogic : MonoBehaviour
 
         if (closingTimer < 0 && isClosing)
         {
-            SceneManager.LoadScene("PickSides Level");
+            uiState = "nextLevel";
+            isClosing = false;
+            ScoreBehavior.levels.RemoveAt(0);
+            if (ScoreBehavior.levels.Count == 0) { Initiate.Fade("End Level", Color.black, 2f); }
+            else
+            {
+                string nextLevel = ScoreBehavior.levels[0];
+                Initiate.Fade(nextLevel, Color.black, 2f);
+            }
         }
     }
 

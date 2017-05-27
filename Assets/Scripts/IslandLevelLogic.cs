@@ -18,7 +18,7 @@ public class IslandLevelLogic : MonoBehaviour
     private int side;
 
     private int[] scores = new int[] { 0, 0, 0, 0 };
-    private bool[] chosen = new bool[] { false, false, false, false };
+    public bool[] chosen = new bool[] { false, false, false, false };
 
 
     // Use this for initialization
@@ -28,7 +28,7 @@ public class IslandLevelLogic : MonoBehaviour
         UIcanvas = GameObject.FindGameObjectWithTag("UI").GetComponent<UIBehaviour>();
 
         isCutscene = true;
-        openTimer = 10f;
+        openTimer = 5f;
         closingTimer = 10f;
         openingScene();
         uiState = "begin";
@@ -141,17 +141,17 @@ public class IslandLevelLogic : MonoBehaviour
 
             openTimer -= Time.deltaTime;
 
-            if (openTimer < 8 && uiState == "begin")
-            {
-                uiState = "text1";
-                UIcanvas.setInstructions("Vote for a player you hold disdain for.");
+            //if (openTimer < 8 && uiState == "begin")
+            //{
+            //    uiState = "text1";
+            //    UIcanvas.setInstructions("Vote for a player you hold disdain for.");
 
-            }
+            //}
 
-            else if (openTimer < 4 && uiState == "text1")
+            if (openTimer < 3 && uiState == "begin")
             {
                 uiState = "text2";
-                UIcanvas.setInstructions("Players with the highest votes will be punished.");
+                UIcanvas.setInstructions("Who deserves to be punished?");
 
             }
 
@@ -166,13 +166,14 @@ public class IslandLevelLogic : MonoBehaviour
                 }
 
                 uiState = "gameplay";
+                UIcanvas.startTimer(30f);
 
 
 
             }
         }
 
-        if (UIcanvas.uiTimer <= 0 && !isClosing)
+        if (UIcanvas.uiTimer <= 0 && !isClosing && uiState == "gameplay")
         {
             isClosing = true;
             uiState = "punish";
@@ -186,8 +187,15 @@ public class IslandLevelLogic : MonoBehaviour
 
         if (closingTimer < 0 && isClosing)
         {
-            Initiate.Fade("PickSides Level", Color.black, 2f);
+            uiState = "nextLevel";
             isClosing = false;
+            ScoreBehavior.levels.RemoveAt(0);
+            if (ScoreBehavior.levels.Count == 0) { Initiate.Fade("End Level", Color.black, 2f); }
+            else
+            {
+                string nextLevel = ScoreBehavior.levels[0];
+                Initiate.Fade(nextLevel, Color.black, 2f);
+            }
         }
     }
     private void openingScene()

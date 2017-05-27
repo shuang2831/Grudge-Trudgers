@@ -68,17 +68,32 @@ public class TrackTargets : MonoBehaviour
 
         if (min.x < 100 || min.y < 100 || max.x > Screen.width - 100 || max.y > Screen.height - 100)
         {
-
-            Camera.main.fieldOfView += 0.2f;
+            if (Camera.main.fieldOfView > 100f)
+            {
+                if (transform.position.y < 25)
+                {
+                    transform.Translate(0, 0.1f, 0);
+                }
+            }
+            else
+            {
+                Camera.main.fieldOfView += 0.2f;
+            }
 
         }
         else if (min.x > 600 || min.y > 600 || max.x < Screen.width - 600 || max.y < Screen.height - 600)
         {
-            if (Camera.main.fieldOfView > minFov)
+            if (Camera.main.fieldOfView > 100f)
+            {
+                transform.Translate(0, -0.1f, 0);
+                Camera.main.fieldOfView -= 0.2f;
+            }
+            else if (Camera.main.fieldOfView > minFov)
             {
                Camera.main.fieldOfView -= 0.2f;
 
             }
+            
 
         }
     }

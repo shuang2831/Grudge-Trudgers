@@ -30,11 +30,13 @@ public class PickSidesLevelLogic : MonoBehaviour {
         openingScene();
         uiState = "begin";
         side = 0;
-
+        
     }
 
     // Update is called once per frame
     void Update () {
+
+       
 
         side = 0;
 
@@ -140,7 +142,7 @@ public class PickSidesLevelLogic : MonoBehaviour {
             else if (openTimer < 4 && uiState == "text1")
             {
                 uiState = "text2";
-                UIcanvas.setInstructions("Anything else, and you're all punished. You have 30 seconds to pick your side.");
+                UIcanvas.setInstructions("Anything else, and you're all punished.");
 
             }
 
@@ -153,7 +155,7 @@ public class PickSidesLevelLogic : MonoBehaviour {
                     player.GetComponent<PlayerController>().enabled = true;
 
                 }
-
+                UIcanvas.startTimer(30f);
                 uiState = "gameplay";
 
                 
@@ -161,7 +163,7 @@ public class PickSidesLevelLogic : MonoBehaviour {
             }
         }
 
-        if (UIcanvas.uiTimer <= 0 && !isClosing)
+        if (UIcanvas.uiTimer <= 0 && !isClosing && uiState == "gameplay")
         {
             isClosing = true;
             uiState = "punish";
@@ -175,8 +177,15 @@ public class PickSidesLevelLogic : MonoBehaviour {
 
         if (closingTimer < 0 && isClosing)
         {
-            Initiate.Fade("PickSides Level", Color.black, 2f);
+            uiState = "nextLevel";
             isClosing = false;
+            ScoreBehavior.levels.RemoveAt(0);
+            if (ScoreBehavior.levels.Count == 0) { Initiate.Fade("End Level", Color.black, 2f); }
+            else
+            {
+                string nextLevel = ScoreBehavior.levels[0];
+                Initiate.Fade(nextLevel, Color.black, 2f);
+            }
         }
     }
     private void openingScene()

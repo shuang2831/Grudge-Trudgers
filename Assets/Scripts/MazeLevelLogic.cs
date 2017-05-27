@@ -55,7 +55,7 @@ public class MazeLevelLogic : MonoBehaviour {
                 }
             }
 
-            player.GetComponentInChildren<Light>().range = numClose * 10;
+            player.GetComponentInChildren<Light>().range = numClose * 5;
 
         }
 
@@ -124,7 +124,7 @@ public class MazeLevelLogic : MonoBehaviour {
             }
         }
 
-        if (UIcanvas.uiTimer <= 0 && !isClosing)
+        if (UIcanvas.uiTimer <= 0 && !isClosing && uiState == "gameplay")
         {
             isClosing = true;
             uiState = "punish";
@@ -138,8 +138,15 @@ public class MazeLevelLogic : MonoBehaviour {
 
         if (closingTimer < 0 && isClosing)
         {
-            Initiate.Fade("PickSides Level", Color.black, 2f);
+            uiState = "nextLevel";
             isClosing = false;
+            ScoreBehavior.levels.RemoveAt(0);
+            if (ScoreBehavior.levels.Count == 0) { Initiate.Fade("End Level", Color.black, 2f); }
+            else
+            {
+                string nextLevel = ScoreBehavior.levels[0];
+                Initiate.Fade(nextLevel, Color.black, 2f);
+            }
         }
     }
     private void openingScene()
