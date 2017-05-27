@@ -110,7 +110,7 @@ public class PlayerController : MonoBehaviour {
 
         if (!slipping)
         {
-            rb.velocity = new Vector3(Move.x, rb.velocity.y, Move.z);
+            rb.velocity = new Vector3(xMove.x, rb.velocity.y, xMove.z);
         }
 
 

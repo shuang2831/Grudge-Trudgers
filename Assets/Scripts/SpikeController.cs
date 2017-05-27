@@ -7,54 +7,122 @@ public class SpikeController : MonoBehaviour {
     private GameObject[] spikes;
     //private PlayerController[] playerControllers;
     private Rigidbody rb;
-    public Transform[] ts = GameObject.GetComponentsInChildren<Transform>();
-    bool active = false;
-    public List<GameObject> children;
     int state = 0;
-    float cycleTime;
-    float delayTime;
+    private float delay;
+    bool isActive;
+    float cycleTime = 0f;
+    float delayTime = 4f;
+    float restTime = 6f;
+    float spikeTime = 1f;
+    private float state0 = -4.05f;
+    private float state1 = -2.8f;
+    private float state2 = -1.35f;
     // Use this for initialization
     Coroutine coCycle;
     void Start () {
-        ts = GetComponentInChildren<Transform>();
-        foreach(Transform child in transform)
-        {
-            if(child.tag == "Spike")
-            {
-                children.Add(child.gameObject);
-            }
-        }
-        active = false;
-
-        startCycle();
+        players = GameObject.FindGameObjectsWithTag("Player");
+        rb = GetComponent<Rigidbody>();
+        isActive = false;
+        delay = Random.Range(1, 12);
     }
 	
 	// Update is called once per frame
 	void Update () {
-		if(state == 0)
+        cycleTime = cycleTime + Time.deltaTime;
+        if (cycleTime >= delay && !isActive)
         {
+            startCycle();
+            isActive = true;
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if(state == 0)
+        {
+            if(transform.position.y <= state0)
+            {
+                transform.Translate(new Vector3(0, 0, 0));
+                transform.position = new Vector3(transform.position.x, state0, transform.position.z);
+
+            }
+            else
+            {
+                transform.Translate(new Vector3(0, 0, -0.18f));
+            }
+        }
+        else if (state == 1)
+        {
+            if(transform.position.y >= state1)
+            {
+                transform.Translate(new Vector3(0, 0, 0));
+                transform.position = new Vector3(transform.position.x, state1, transform.position.z);
+
+            }
+            else
+            {
+                transform.Translate(new Vector3(0, 0, 0.05f));
+
+            }
+        }
+        else if (state == 2)
+        {
+            
+            if (transform.position.y >= state2)
+            {
+                transform.Translate(new Vector3(0, 0, 0));
+                transform.position = new Vector3(transform.position.x, state2, transform.position.z);
+
+            }
+            else
+            {
+                transform.Translate(new Vector3(0, 0, 0.09f));
+            }
 
         }
-	}
 
-    void spikeCycle(float IntervalTime)
-    {
 
     }
+
 
     public void startCycle()
     {
-        coCycle = StartCoroutine(cycle(3f));
+        coCycle = StartCoroutine(cycle(restTime, delayTime, spikeTime));
     }
 
-    IEnumerator cycle(float time)
+    IEnumerator cycle(float time, float time1, float time2)
     {
         int index = 0;
         while (true)
         {
             state = index % 3;
+            if (state == 0)
+            {
+                //transform.position = new Vector3(transform.position.x, -2.7f, transform.position.z);
+                yield return new WaitForSeconds(time);
+
+            }
+            else if (state == 1)
+            {
+                //transform.position = new Vector3(transform.position.x, -2.0f, transform.position.z);
+                yield return new WaitForSeconds(time1);
+
+            }
+            else if (state == 2)
+            {
+                //transform.position = new Vector3(transform.position.x, -0.5f, transform.position.z);
+                yield return new WaitForSeconds(time2);
+
+            }
             index++;
-            yield return new WaitForSeconds(time);
+
+        }
+    }
+    private void OnTriggerEnter(Collider collision)
+    {
+        if(collision.gameObject.tag == "Player")
+        {
+            collision.gameObject.GetComponent<PlayerController>().punishPlayer();
         }
     }
 }
