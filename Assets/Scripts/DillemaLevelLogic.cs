@@ -15,10 +15,11 @@ public class DillemaLevelLogic : MonoBehaviour
     private float closingTimer;
     private string uiState;
     private UIBehaviour UIcanvas;
-    private int side;
 
-    private int[] scores = new int[] { 0, 0, 0, 0 };
-    private bool[] chosen = new bool[] { false, false, false, false };
+
+    private int[] choices = new int[] { 0, 0 };
+    public bool[] chosen = new bool[] { false, false, false, false };
+    private bool[] betray = new bool[] { false, false, false, false };
 
 
     // Use this for initialization
@@ -32,7 +33,7 @@ public class DillemaLevelLogic : MonoBehaviour
         closingTimer = 10f;
         openingScene();
         uiState = "begin";
-        side = 0;
+
 
     }
 
@@ -49,24 +50,17 @@ public class DillemaLevelLogic : MonoBehaviour
                 {
                     if (player.GetComponent<PlayerController>().prevState.Buttons.X == ButtonState.Released && player.GetComponent<PlayerController>().state.Buttons.X == ButtonState.Pressed)
                     {
-                        scores[0] = scores[0] + 1;
+                        choices[0] = choices[0] + 1;
                         chosen[player.GetComponent<PlayerController>().playerNum - 1] = true;
                     }
-                    if (player.GetComponent<PlayerController>().prevState.Buttons.Y == ButtonState.Released && player.GetComponent<PlayerController>().state.Buttons.Y == ButtonState.Pressed)
-                    {
-                        scores[1] = scores[1] + 1;
-                        chosen[player.GetComponent<PlayerController>().playerNum - 1] = true;
-                    }
+                    
                     if (player.GetComponent<PlayerController>().prevState.Buttons.B == ButtonState.Released && player.GetComponent<PlayerController>().state.Buttons.B == ButtonState.Pressed)
                     {
-                        scores[2] = scores[2] + 1;
+                        choices[1] = choices[1] + 1;
                         chosen[player.GetComponent<PlayerController>().playerNum - 1] = true;
+                        betray[player.GetComponent<PlayerController>().playerNum - 1] = true;
                     }
-                    if (player.GetComponent<PlayerController>().prevState.Buttons.A == ButtonState.Released && player.GetComponent<PlayerController>().state.Buttons.A == ButtonState.Pressed)
-                    {
-                        scores[3] = scores[3] + 1;
-                        chosen[player.GetComponent<PlayerController>().playerNum - 1] = true;
-                    }
+                    
                 }
 
             }
@@ -82,25 +76,43 @@ public class DillemaLevelLogic : MonoBehaviour
         {
             int maxVotes = 0;
 
-            for (int i = 0; i < 4; i++)
+            if (choices[0] == 4)
             {
 
-                if (scores[i] > maxVotes)
+                foreach (GameObject player in players)
                 {
-                    maxVotes = scores[i];
-                }
 
+                    
+                    player.GetComponent<PlayerController>().rewardPlayer(5);
+                    
+
+                }
             }
-
-            foreach (GameObject player in players)
+            else if (choices[1] == 4)
             {
 
-                if (scores[player.GetComponent<PlayerController>().playerNum - 1] == maxVotes && maxVotes != 0)
+                foreach (GameObject player in players)
                 {
-                    //player.GetComponent<PlayerController>().lightning.enabled = true;
-                    player.GetComponent<PlayerController>().rewardPlayer(10);
-                }
 
+                    player.GetComponent<PlayerController>().lightning.enabled = true;
+                    player.GetComponent<PlayerController>().punishPlayerLight();
+
+
+                }
+            }
+            else
+            {
+                foreach (GameObject player in players)
+                {
+
+                    if (!betray[player.GetComponent<PlayerController>().playerNum - 1])
+                    {
+                        player.GetComponent<PlayerController>().punishPlayerLight();
+                    }
+                    
+
+
+                }
             }
 
             uiState = "endgame";
@@ -123,14 +135,14 @@ public class DillemaLevelLogic : MonoBehaviour
             if (openTimer < 8 && uiState == "begin")
             {
                 uiState = "text1";
-                UIcanvas.setInstructions("Dillema time! Pick either 'cooperate' or 'betray' your peer.");
+                UIcanvas.setInstructions("Dillema time! All pick cooperate to get rewards.");
 
             }
 
             else if (openTimer < 4 && uiState == "text1")
             {
                 uiState = "text2";
-                UIcanvas.setInstructions("If you all cooperate, noone is punished. If anyone betrays, only those that cooperated will be punished. But if you all betray, then you all will be punished. Choose wisely.");
+                UIcanvas.setInstructions("Betray, and anyone who didn't will be punished. All betray, and you're all punished.");
 
             }
 
@@ -152,7 +164,7 @@ public class DillemaLevelLogic : MonoBehaviour
             }
         }
 
-        if (UIcanvas.uiTimer <= 0 && !isClosing)
+        if (UIcanvas.uiTimer <= 0 && !isClosing && uiState == "gameplay")
         {
             isClosing = true;
             uiState = "punish";
@@ -166,8 +178,15 @@ public class DillemaLevelLogic : MonoBehaviour
 
         if (closingTimer < 0 && isClosing)
         {
-            Initiate.Fade("PickSides Level", Color.black, 2f);
+            uiState = "nextLevel";
             isClosing = false;
+            ScoreBehavior.levels.RemoveAt(0);
+            if (ScoreBehavior.levels.Count == 0) { Initiate.Fade("End Level", Color.black, 2f); }
+            else
+            {
+                string nextLevel = ScoreBehavior.levels[0];
+                Initiate.Fade(nextLevel, Color.black, 2f);
+            }
         }
     }
     private void openingScene()

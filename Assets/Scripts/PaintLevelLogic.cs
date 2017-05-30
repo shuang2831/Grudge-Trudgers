@@ -40,7 +40,7 @@ public class PaintLevelLogic : MonoBehaviour
         UIcanvas = GameObject.FindGameObjectWithTag("UI").GetComponent<UIBehaviour>();
 
         isCutscene = true;
-        openTimer = 10f;
+        openTimer = 5f;
         closingTimer = 10f;
         openingScene();
         uiState = "begin";
@@ -56,17 +56,17 @@ public class PaintLevelLogic : MonoBehaviour
         colors2 = new Color32[100];
         for (int i = 0; i < 100; i++)
         {
-            colors2[i] = Color.red;
+            colors2[i] = Color.yellow;
         }
         colors3 = new Color32[100];
         for (int i = 0; i < 100; i++)
         {
-            colors3[i] = Color.green;
+            colors3[i] = Color.red;
         }
         colors4 = new Color32[100];
         for (int i = 0; i < 100; i++)
         {
-            colors4[i] = Color.cyan;
+            colors4[i] = Color.green;
         }
 
         colors = new Color32[][] { colors1, colors2, colors3, colors4 };
@@ -104,15 +104,15 @@ public class PaintLevelLogic : MonoBehaviour
                 {
                     scores[0] = scores[0] + 1;
                 }
-                if (col == Color.red)
+                if (col == Color.yellow)
                 {
                     scores[1] = scores[1] + 1;
                 }
-                if (col == Color.green)
+                if (col == Color.red)
                 {
                     scores[2] = scores[2] + 1;
                 }
-                if (col == Color.cyan)
+                if (col == Color.green)
                 {
                     scores[3] = scores[3] + 1;
                 }
@@ -164,7 +164,7 @@ public class PaintLevelLogic : MonoBehaviour
 
         if (isCutscene)
         {
-            if (openTimer > 8)
+            if (openTimer > 3)
             {
                 foreach (GameObject player in players)
                 {
@@ -176,17 +176,17 @@ public class PaintLevelLogic : MonoBehaviour
 
             openTimer -= Time.deltaTime;
 
-            if (openTimer < 8 && uiState == "begin")
-            {
-                uiState = "text1";
-                UIcanvas.setInstructions("It's time to paint the ground with your color!");
+            //if (openTimer < 8 && uiState == "begin")
+            //{
+            //    uiState = "text1";
+            //    UIcanvas.setInstructions("It's time to paint the ground with your color!");
 
-            }
+            //}
 
-            else if (openTimer < 4 && uiState == "text1")
+            if (openTimer < 3 && uiState == "begin")
             {
                 uiState = "text2";
-                UIcanvas.setInstructions("Paint the least, and you'll be punished. You have 30 seconds.");
+                UIcanvas.setInstructions("Paint the least, and you'll be punished.");
 
             }
 
@@ -207,7 +207,7 @@ public class PaintLevelLogic : MonoBehaviour
             }
         }
 
-        if (UIcanvas.uiTimer <= 0 && !isClosing)
+        if (UIcanvas.uiTimer <= 0 && !isClosing && uiState == "gameplay")
         {
             isClosing = true;
             uiState = "punish";
@@ -221,8 +221,15 @@ public class PaintLevelLogic : MonoBehaviour
 
         if (closingTimer < 0 && isClosing)
         {
-            Initiate.Fade("PickSides Level", Color.black, 2f);
+            uiState = "nextLevel";
             isClosing = false;
+            ScoreBehavior.levels.RemoveAt(0);
+            if (ScoreBehavior.levels.Count == 0) { Initiate.Fade("End Level", Color.black, 2f); }
+            else
+            {
+                string nextLevel = ScoreBehavior.levels[0];
+                Initiate.Fade(nextLevel, Color.black, 2f);
+            }
         }
     }
     private void openingScene()

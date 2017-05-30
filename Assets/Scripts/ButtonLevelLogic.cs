@@ -19,6 +19,8 @@ public class ButtonLevelLogic : MonoBehaviour
     private UIBehaviour UIcanvas;
     private int side;
 
+    private int i = 0;
+
     private int[] scores = new int[] { 0, 0, 0, 0 };
     private bool[] chosen = new bool[] { false, false, false, false };
 
@@ -31,7 +33,7 @@ public class ButtonLevelLogic : MonoBehaviour
         UIcanvas = GameObject.FindGameObjectWithTag("UI").GetComponent<UIBehaviour>();
 
         isCutscene = true;
-        openTimer = 10f;
+        openTimer = 5f;
         closingTimer = 10f;
         openingScene();
         uiState = "begin";
@@ -44,10 +46,7 @@ public class ButtonLevelLogic : MonoBehaviour
     {
 
 
-        if (uiState == "gameplay")
-        {
-            
-        }
+        
 
 
     }
@@ -84,7 +83,7 @@ public class ButtonLevelLogic : MonoBehaviour
 
         if (isCutscene)
         {
-            if (openTimer > 8)
+            if (openTimer > 3)
             {
                 foreach (GameObject player in players)
                 {
@@ -96,17 +95,17 @@ public class ButtonLevelLogic : MonoBehaviour
 
             openTimer -= Time.deltaTime;
 
-            if (openTimer < 8 && uiState == "begin")
-            {
-                uiState = "text1";
-                UIcanvas.setInstructions("Don't let this little guy push you off for a reward!");
+            //if (openTimer < 8 && uiState == "begin")
+            //{
+            //    uiState = "text1";
+            //    UIcanvas.setInstructions("Don't let this little guy push you off for a reward!");
 
-            }
+            //}
 
-            else if (openTimer < 4 && uiState == "text1")
+            if (openTimer < 3 && uiState == "begin")
             {
                 uiState = "text2";
-                UIcanvas.setInstructions("I wonder what this button does...");
+                UIcanvas.setInstructions("Just stay within the yellow lines...");
 
             }
 
@@ -120,7 +119,7 @@ public class ButtonLevelLogic : MonoBehaviour
 
                 }
                 //enemy.GetComponent<BlobController>().enabled = true;
-                UIcanvas.startTimer(15);
+                UIcanvas.startTimer(30);
                 uiState = "gameplay";
 
 
@@ -128,7 +127,7 @@ public class ButtonLevelLogic : MonoBehaviour
             }
         }
 
-        if (UIcanvas.uiTimer <= 0 && !isClosing)
+        if (UIcanvas.uiTimer <= 0 && !isClosing && uiState == "gameplay")
         {
             isClosing = true;
             uiState = "punish";
@@ -138,13 +137,23 @@ public class ButtonLevelLogic : MonoBehaviour
         if (isClosing)
         {
             closingTimer -= Time.deltaTime;
+
         }
 
         if (closingTimer < 0 && isClosing)
         {
-            Initiate.Fade("PickSides Level", Color.black, 2f);
+            uiState = "nextLevel";
             isClosing = false;
+            ScoreBehavior.levels.RemoveAt(0);
+            if (ScoreBehavior.levels.Count == 0) { Initiate.Fade("End Level", Color.black, 2f); }
+            else
+            {
+                string nextLevel = ScoreBehavior.levels[0];
+                Initiate.Fade(nextLevel, Color.black, 2f);
+            }
         }
+
+
     }
     private void openingScene()
     {

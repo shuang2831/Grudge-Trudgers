@@ -8,6 +8,7 @@ public class UIBehaviour : MonoBehaviour
 {
 
     private Text[] textFields;
+    private Image[] images;
     private float Timer;
     private bool timeEnd;
     private bool countdown;
@@ -20,6 +21,7 @@ public class UIBehaviour : MonoBehaviour
         Timer = -99f;
         timeEnd = false;
         textFields = GetComponentsInChildren<Text>();
+        images = GetComponentsInChildren<Image>();
         uiTimer = float.MaxValue;
         //getText("Timer").text = "Timer";
 
@@ -30,7 +32,7 @@ public class UIBehaviour : MonoBehaviour
     {
 
     }
-
+            
     private void FixedUpdate()
     {
         Timer -= Time.deltaTime;
@@ -44,11 +46,20 @@ public class UIBehaviour : MonoBehaviour
             //startTimer();
         }
        
-        if (countdown && uiTimer > 0)
+        if (countdown)
         {
-            uiTimer -= Time.deltaTime;
-            getText("Timer").color = new Color(1, (uiTimer / 30), (uiTimer / 30));
-            getText("Timer").text = Mathf.CeilToInt(uiTimer).ToString();
+            if (uiTimer >= 0)
+            {
+                uiTimer -= Time.deltaTime;
+                getText("Timer").color = new Color(1, (uiTimer / 30), (uiTimer / 30));
+                getText("Timer").text = Mathf.CeilToInt(uiTimer).ToString();
+            } else
+            {
+                getText("Timer").color = new Color(1, 1, 1);
+                getText("Timer").text = "END!";
+                getText("tIcon").text = "";
+                getText("Timer").transform.localPosition = new Vector3(0, 244, 0);
+            }
         }
         
     }
@@ -67,15 +78,37 @@ public class UIBehaviour : MonoBehaviour
 
     private Image getImage(string systemName)
     {
-        //foreach (Image tf in images)
-        // {
-        //    if (tf.name == systemName)
-        //   {
-        //     return tf;
-        //   }
-        // }
+        foreach (Image tf in images)
+        {
+            if (tf.name == systemName)
+            {
+                return tf;
+            }
+        }
         return null;
     }
+
+    public void showOpeningInstructions()
+    {
+        Timer = 30;
+        timeEnd = true;
+        getText("openInstructions").enabled = true;
+        getImage("bImage").enabled = true;
+        StartCoroutine(FadeTextToFullAlpha(3f, getText("openInstructions")));
+ 
+    }
+
+    public void showClosingResults(int oneScore, int twoScore, int threeScore, int fourScore)
+    {
+        Timer = 30;
+        timeEnd = true;
+        getText("closingResults").enabled = true;
+        getText("closingResults").text = "Gold Count: \n \n Player 1: " + oneScore + " \n Player 2: " + twoScore + "\n Player 3: " + threeScore + " \n Player 4: " + fourScore;
+        getImage("bImage").enabled = true;
+        StartCoroutine(FadeTextToFullAlpha(3f, getText("closingResults")));
+
+    }
+
 
     public void setInstructions(string t, float time = 5.0f)
     {

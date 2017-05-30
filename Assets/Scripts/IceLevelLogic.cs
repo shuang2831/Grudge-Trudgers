@@ -26,8 +26,8 @@ public class IceLevelLogic : MonoBehaviour
         UIcanvas = GameObject.FindGameObjectWithTag("UI").GetComponent<UIBehaviour>();
 
         isCutscene = true;
-        openTimer = 10f;
-        closingTimer = 10f;
+        openTimer = 5f;
+        closingTimer = 5f;
         openingScene();
         uiState = "begin";
         freezing = new bool[] { false, false, false, false };
@@ -94,33 +94,26 @@ public class IceLevelLogic : MonoBehaviour
 
         if (isCutscene)
         {
-            if (openTimer > 8)
-            {
-                foreach (GameObject player in players)
-                {
-                    //player.transform.Translate(Vector3.forward * Time.deltaTime * 2.5f);
-
-                }
-            }
+            
 
 
             openTimer -= Time.deltaTime;
 
-            if (openTimer < 8 && uiState == "begin")
+            if (openTimer < 3 && uiState == "begin")
             {
                 uiState = "text1";
-                UIcanvas.setInstructions("It's a cold day outside, huddle for warmth!");
+                UIcanvas.setInstructions("Slide the ice to the goal!");
 
             }
 
-            else if (openTimer < 4 && uiState == "text1")
-            {
-                uiState = "text2";
-                UIcanvas.setInstructions("Be left alone and you'll freeze!");
+            //else if (openTimer < 4 && uiState == "text1")
+            //{
+            //    uiState = "text2";
+            //    UIcanvas.setInstructions("Be left alone and you'll freeze!");
 
-            }
+            //}
 
-            else if (openTimer < 0 && uiState == "text2")
+            else if (openTimer < 0 && uiState == "text1")
             {
                 isCutscene = false;
                 foreach (GameObject player in players)
@@ -137,7 +130,7 @@ public class IceLevelLogic : MonoBehaviour
             }
         }
 
-        if (UIcanvas.uiTimer <= 0 && !isClosing)
+        if (UIcanvas.uiTimer <= 0 && !isClosing && uiState == "gameplay")
         {
             isClosing = true;
             uiState = "punish";
@@ -151,8 +144,15 @@ public class IceLevelLogic : MonoBehaviour
 
         if (closingTimer < 0 && isClosing)
         {
-            Initiate.Fade("PickSides Level", Color.black, 2f);
+            uiState = "nextLevel";
             isClosing = false;
+            ScoreBehavior.levels.RemoveAt(0);
+            if (ScoreBehavior.levels.Count == 0) { Initiate.Fade("End Level", Color.black, 2f); }
+            else
+            {
+                string nextLevel = ScoreBehavior.levels[0];
+                Initiate.Fade(nextLevel, Color.black, 2f);
+            }
         }
     }
     private void openingScene()

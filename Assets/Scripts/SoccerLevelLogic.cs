@@ -31,7 +31,7 @@ public class SoccerLevelLogic : MonoBehaviour
         playerPunished = new bool[] { false, false, false, false };
 
         isCutscene = true;
-        openTimer = 2f;
+        openTimer = 5f;
         closingTimer = 10f;
         openingScene();
         uiState = "begin";
@@ -41,21 +41,7 @@ public class SoccerLevelLogic : MonoBehaviour
     void Update()
     {
 
-        if (uiState == "gameplay")
-        {
-
-            foreach (GameObject goal in goals)
-            {
-
-                if (goal.GetComponent<SoccerGoalBehaviour>().scored && !playerPunished[goal.GetComponent<SoccerGoalBehaviour>().player.GetComponent<PlayerController>().playerNum - 1])
-                {
-                    goal.GetComponent<SoccerGoalBehaviour>().player.GetComponent<PlayerController>().lightning.enabled = true;
-                    goal.GetComponent<SoccerGoalBehaviour>().player.GetComponent<PlayerController>().punishPlayerLight();
-                    playerPunished[goal.GetComponent<SoccerGoalBehaviour>().player.GetComponent<PlayerController>().playerNum - 1] = true;
-                }
-
-            }
-        }
+        
     }
 
     void FixedUpdate()
@@ -79,44 +65,38 @@ public class SoccerLevelLogic : MonoBehaviour
 
         if (uiState == "gameplay")
         {
-            foreach (GameObject player in players)
+
+            foreach (GameObject goal in goals)
             {
 
-
-
-
-
-
+                if (goal.GetComponent<SoccerGoalBehaviour>().scored && !playerPunished[goal.GetComponent<SoccerGoalBehaviour>().player.GetComponent<PlayerController>().playerNum - 1])
+                {
+                    goal.GetComponent<SoccerGoalBehaviour>().player.GetComponent<PlayerController>().lightning.enabled = true;
+                    goal.GetComponent<SoccerGoalBehaviour>().player.GetComponent<PlayerController>().punishPlayerLight();
+                    playerPunished[goal.GetComponent<SoccerGoalBehaviour>().player.GetComponent<PlayerController>().playerNum - 1] = true;
+                }
 
             }
         }
 
-
         if (isCutscene)
         {
-            if (openTimer > 8)
-            {
-                foreach (GameObject player in players)
-                {
-                    player.transform.Translate(Vector3.forward * Time.deltaTime * 2.5f);
-
-                }
-            }
+            
 
 
             openTimer -= Time.deltaTime;
 
-            if (openTimer < 8 && uiState == "begin")
-            {
-                uiState = "text1";
-                UIcanvas.setInstructions("Stab your peers' back to steal some gold.");
+            //if (openTimer < 8 && uiState == "begin")
+            //{
+            //    uiState = "text1";
+            //    UIcanvas.setInstructions("Stab your peers' back to steal some gold.");
 
-            }
+            //}
 
-            else if (openTimer < 4 && uiState == "text1")
+            if (openTimer < 3 && uiState == "begin")
             {
                 uiState = "text2";
-                UIcanvas.setInstructions("Press the button when the knife appears!");
+                UIcanvas.setInstructions("Don't let anyone score in your goal!");
 
             }
 
@@ -137,7 +117,7 @@ public class SoccerLevelLogic : MonoBehaviour
             }
         }
 
-        if (UIcanvas.uiTimer <= 0 && !isClosing)
+        if (UIcanvas.uiTimer <= 0 && !isClosing && uiState == "gameplay")
         {
             isClosing = true;
             uiState = "punish";
@@ -151,8 +131,15 @@ public class SoccerLevelLogic : MonoBehaviour
 
         if (closingTimer < 0 && isClosing)
         {
-            Initiate.Fade("PickSides Level", Color.black, 2f);
+            uiState = "nextLevel";
             isClosing = false;
+            ScoreBehavior.levels.RemoveAt(0);
+            if (ScoreBehavior.levels.Count == 0) { Initiate.Fade("End Level", Color.black, 2f); }
+            else
+            {
+                string nextLevel = ScoreBehavior.levels[0];
+                Initiate.Fade(nextLevel, Color.black, 2f);
+            }
         }
     }
 

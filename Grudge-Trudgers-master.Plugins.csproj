@@ -122,6 +122,7 @@
     <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonLitOutline.shader" />
     <None Include="Assets\XInputDotNet\Docs.txt" />
     <None Include="Assets\XInputDotNet\MITLicense.txt" />
+    <None Include="Assets\torch\readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

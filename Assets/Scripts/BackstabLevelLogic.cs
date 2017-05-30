@@ -27,8 +27,8 @@ public class BackstabLevelLogic : MonoBehaviour
         UIcanvas = GameObject.FindGameObjectWithTag("UI").GetComponent<UIBehaviour>();
 
         isCutscene = true;
-        openTimer = 10f;
-        closingTimer = 10f;
+        openTimer = 5f;
+        closingTimer = 5f;
         openingScene();
         uiState = "begin";
     }
@@ -36,30 +36,7 @@ public class BackstabLevelLogic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (uiState == "gameplay")
-        {
-            foreach (GameObject player in players)
-            {
-
-                RaycastHit hit;
-
-                if (Physics.Raycast(player.transform.position, (player.transform.forward * -1), out hit, 1))
-                {
-                    if (hit.transform.gameObject.tag == "Player" && playerBehind[player.GetComponent<PlayerController>().playerNum - 1] && player.GetComponent<PlayerController>().isActive)
-                    {
-                        if (hit.transform.gameObject.GetComponent<PlayerController>().prevState.Buttons.A == ButtonState.Released && hit.transform.gameObject.GetComponent<PlayerController>().state.Buttons.A == ButtonState.Pressed)
-                        {
-                            hit.transform.gameObject.GetComponent<PlayerController>().isActive = false;
-                            player.GetComponent<PlayerController>().punishPlayer();
-                            player.GetComponent<PlayerController>().enabled = false;
-                            player.GetComponent<PlayerController>().renderer.enabled = false;
-
-                        }
-                    }
-                }
-
-            }
-        }
+       
     }
 
     void FixedUpdate()
@@ -77,6 +54,34 @@ public class BackstabLevelLogic : MonoBehaviour
             }
 
             uiState = "endgame";
+        }
+
+        if (uiState == "gameplay")
+        {
+            foreach (GameObject player in players)
+            {
+
+                RaycastHit hit;
+
+                if (Physics.Raycast(player.transform.position, (player.transform.forward * -1), out hit, 1))
+                {
+                    if (hit.transform.gameObject.tag == "Player" && playerBehind[player.GetComponent<PlayerController>().playerNum - 1] && player.GetComponent<PlayerController>().isActive)
+                    {
+                        if (hit.transform.gameObject.GetComponent<PlayerController>().prevState.Buttons.A == ButtonState.Released && hit.transform.gameObject.GetComponent<PlayerController>().state.Buttons.A == ButtonState.Pressed)
+                        {
+                            hit.transform.gameObject.GetComponent<PlayerController>().isActive = false;
+                            player.GetComponent<PlayerController>().punishPlayer();
+                            player.GetComponent<PlayerController>().enabled = false;
+                            player.GetComponent<Rigidbody>().isKinematic = true;
+                            player.transform.Translate(0, -95, 0);
+                            player.transform.GetChild(0).GetComponent<Rigidbody>().useGravity = true;
+
+
+                        }
+                    }
+                }
+
+            }
         }
 
         if (uiState == "gameplay")
@@ -107,7 +112,7 @@ public class BackstabLevelLogic : MonoBehaviour
 
         if (isCutscene)
         {
-            if (openTimer > 8)
+            if (openTimer > 3)
             {
                 foreach (GameObject player in players)
                 {
@@ -119,17 +124,17 @@ public class BackstabLevelLogic : MonoBehaviour
 
             openTimer -= Time.deltaTime;
 
-            if (openTimer < 8 && uiState == "begin")
-            {
-                uiState = "text1";
-                UIcanvas.setInstructions("Stab your peers' back to steal some gold.");
+            //if (openTimer < 8 && uiState == "begin")
+            //{
+            //    uiState = "text1";
+            //    UIcanvas.setInstructions("Stab your peers' back to steal some gold.");
 
-            }
+            //}
 
-            else if (openTimer < 4 && uiState == "text1")
+            if (openTimer < 3 && uiState == "begin")
             {
                 uiState = "text2";
-                UIcanvas.setInstructions("Press the button when the knife appears!");
+                UIcanvas.setInstructions("Watch your back...");
 
             }
 
@@ -150,11 +155,10 @@ public class BackstabLevelLogic : MonoBehaviour
             }
         }
 
-        if (UIcanvas.uiTimer <= 0 && !isClosing)
+        if (UIcanvas.uiTimer <= 0 && !isClosing && uiState == "gameplay")
         {
             isClosing = true;
             uiState = "punish";
-
         }
 
         if (isClosing)
@@ -164,8 +168,15 @@ public class BackstabLevelLogic : MonoBehaviour
 
         if (closingTimer < 0 && isClosing)
         {
-            Initiate.Fade("PickSides Level", Color.black, 2f);
+            uiState = "nextLevel";
             isClosing = false;
+            ScoreBehavior.levels.RemoveAt(0);
+            if (ScoreBehavior.levels.Count == 0) { Initiate.Fade("End Level", Color.black, 2f); }
+            else
+            {
+                string nextLevel = ScoreBehavior.levels[0];
+                Initiate.Fade(nextLevel, Color.black, 2f);
+            }
         }
     }
 
