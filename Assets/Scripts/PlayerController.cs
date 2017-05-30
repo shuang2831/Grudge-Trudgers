@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour {
 
     void FixedUpdate()
     {
-        anim.Play("Idle");
+        //anim.Play("Idle");
 
         // Get input movement directions
         float moveHorizontal = Input.GetAxisRaw(horizontalMove);
@@ -116,7 +116,7 @@ public class PlayerController : MonoBehaviour {
 
         if (xMove == Vector3.zero)
         {
-            anim.Play("Idle");
+            //anim.Play("Idle");
         }
 
         if (!slipping)

@@ -121,6 +121,8 @@
     <Compile Include="Assets\Scripts\SoccerGoalBehaviour.cs" />
     <Compile Include="Assets\Scripts\SoccerLevelLogic.cs" />
     <Compile Include="Assets\Scripts\SpeechBubbleRotate.cs" />
+    <Compile Include="Assets\Scripts\SpikeController.cs" />
+    <Compile Include="Assets\Scripts\SpikeLevelLogic.cs" />
     <Compile Include="Assets\Scripts\TerrainPaintLogic.cs" />
     <Compile Include="Assets\Scripts\TrackTargets.cs" />
     <Compile Include="Assets\Scripts\UIBehaviour.cs" />
