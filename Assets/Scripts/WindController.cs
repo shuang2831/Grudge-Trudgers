@@ -73,20 +73,24 @@ public class WindController : MonoBehaviour {
 
     IEnumerator delayCycle(ParticleSystem ps)
     {
-        if(ps.isPlaying)
+
+        while(true)
         {
-            ps.Stop();
-            //Debug.Log(string.Format( "Cannon Stopped"));
-            Debug.Log(string.Format("IsPlaying?: {0}", ps.isPlaying));
+            if (ps.isPlaying)
+            {
+                ps.Stop();
+                //Debug.Log(string.Format( "Cannon Stopped"));
+                Debug.Log(string.Format("IsPlaying?: {0}", ps.isPlaying));
+            }
+            else
+            {
+                ps.Play();
+                //Debug.Log(string.Format("Cannon Started"));
+                Debug.Log(string.Format("IsPlaying?: {0}", ps.isPlaying));
+
+            }
+            yield return new WaitForSecondsRealtime(3.5f);
         }
-        else
-        {
-            ps.Play();
-            //Debug.Log(string.Format("Cannon Started"));
-            Debug.Log(string.Format("IsPlaying?: {0}", ps.isPlaying));
-            
-        }
-        yield return new WaitForSecondsRealtime(3f);
     }
 
     private void OnTriggerStay(Collider collision)
