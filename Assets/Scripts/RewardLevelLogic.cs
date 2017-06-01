@@ -9,6 +9,7 @@ public class RewardLevelLogic : MonoBehaviour
 {
     private GameObject[] players;
     private PlayerController[] playerControllers;
+    private AudioSource[] sounds;
     private bool isCutscene;
     private bool isClosing;
     private float openTimer;
@@ -18,7 +19,7 @@ public class RewardLevelLogic : MonoBehaviour
     private int side;
 
     private int[] scores = new int[] { 0, 0, 0, 0 };
-    private bool[] chosen = new bool[] { false, false, false, false };
+    public bool[] chosen = new bool[] { false, false, false, false };
 
 
     // Use this for initialization
@@ -27,8 +28,10 @@ public class RewardLevelLogic : MonoBehaviour
         players = GameObject.FindGameObjectsWithTag("Player");
         UIcanvas = GameObject.FindGameObjectWithTag("UI").GetComponent<UIBehaviour>();
 
+        sounds = GetComponents<AudioSource>();
+
         isCutscene = true;
-        openTimer = 10f;
+        openTimer = 5f;
         closingTimer = 10f;
         openingScene();
         uiState = "begin";
@@ -116,9 +119,9 @@ public class RewardLevelLogic : MonoBehaviour
             foreach (GameObject player in players)
             {
 
-                if (scores[player.GetComponent<PlayerController>().playerNum - 1] == maxVotes && maxVotes != 0)
+                if (scores[player.GetComponent<PlayerController>().playerNum - 1] == maxVotes)
                 {
-                    //player.GetComponent<PlayerController>().lightning.enabled = true;
+                    player.GetComponent<PlayerController>().lightning.enabled = true;
                     player.GetComponent<PlayerController>().rewardPlayer(10);
                 }
 
@@ -141,17 +144,17 @@ public class RewardLevelLogic : MonoBehaviour
 
             openTimer -= Time.deltaTime;
 
-            if (openTimer < 8 && uiState == "begin")
-            {
-                uiState = "text1";
-                UIcanvas.setInstructions("Who deserves a reward?");
+            //if (openTimer < 8 && uiState == "begin")
+            //{
+            //    uiState = "text1";
+            //    UIcanvas.setInstructions("Vote for a player you hold disdain for.");
 
-            }
+            //}
 
-            else if (openTimer < 4 && uiState == "text1")
+            if (openTimer < 3 && uiState == "begin")
             {
                 uiState = "text2";
-                UIcanvas.setInstructions("Vote for a player you think should be rewarded.");
+                UIcanvas.setInstructions("Who deserves to be rewarded?");
 
             }
 
@@ -165,9 +168,9 @@ public class RewardLevelLogic : MonoBehaviour
 
                 }
 
-                UIcanvas.startTimer(15);
                 uiState = "gameplay";
-
+                UIcanvas.startTimer(30f);
+                sounds[0].Play();
 
 
             }
@@ -187,6 +190,7 @@ public class RewardLevelLogic : MonoBehaviour
 
         if (closingTimer < 0 && isClosing)
         {
+            sounds[0].Stop();
             uiState = "nextLevel";
             isClosing = false;
             ScoreBehavior.levels.RemoveAt(0);

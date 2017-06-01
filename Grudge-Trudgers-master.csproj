@@ -101,6 +101,7 @@
     <Compile Include="Assets\Scripts\ButtonLevelLogic.cs" />
     <Compile Include="Assets\Scripts\ChoiceTagLogic.cs" />
     <Compile Include="Assets\Scripts\ChoiceTagLogic_Prison.cs" />
+    <Compile Include="Assets\Scripts\ChoiceTagLogic_Reward.cs" />
     <Compile Include="Assets\Scripts\CoinBehaviour.cs" />
     <Compile Include="Assets\Scripts\DillemaLevelLogic.cs" />
     <Compile Include="Assets\Scripts\EndLevelLogic.cs" />
@@ -141,6 +142,7 @@
     <None Include="Assets\Fonts\Lecompte\Lecompte.fnt" />
     <None Include="Assets\LightningBolt\Readme.txt" />
     <None Include="Assets\Simple Scene Fade Load System\ReadMeFirst.txt" />
+    <None Include="Assets\Sounds\Music\Kevin.txt" />
     <None Include="Assets\Standard Assets\Cameras\CameraGuidelines.txt" />
     <None Include="Assets\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
     <None Include="Assets\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />

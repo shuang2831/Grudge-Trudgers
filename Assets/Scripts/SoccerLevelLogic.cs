@@ -8,6 +8,7 @@ public class SoccerLevelLogic : MonoBehaviour
 {
 
     private GameObject[] players;
+    private AudioSource[] sounds;
     public bool[] playerBehind;
     private int[] numNotNear;
     private bool isCutscene;
@@ -25,6 +26,7 @@ public class SoccerLevelLogic : MonoBehaviour
     {
         players = GameObject.FindGameObjectsWithTag("Player");
         goals = GameObject.FindGameObjectsWithTag("playerLight");
+        sounds = GetComponents<AudioSource>();
 
         UIcanvas = GameObject.FindGameObjectWithTag("UI").GetComponent<UIBehaviour>();
 
@@ -111,7 +113,7 @@ public class SoccerLevelLogic : MonoBehaviour
                 }
                 UIcanvas.startTimer(30f);
                 uiState = "gameplay";
-
+                sounds[0].Play();
 
 
             }
@@ -131,6 +133,7 @@ public class SoccerLevelLogic : MonoBehaviour
 
         if (closingTimer < 0 && isClosing)
         {
+            sounds[0].Stop();
             uiState = "nextLevel";
             isClosing = false;
             ScoreBehavior.levels.RemoveAt(0);

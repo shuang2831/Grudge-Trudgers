@@ -8,6 +8,8 @@ public class EndLevelLogic : MonoBehaviour
 {
     private GameObject[] players;
     private PlayerController[] playerControllers;
+    private AudioSource[] sounds;
+
     private bool isCutscene;
     private bool isClosing;
     private float openTimer;
@@ -27,6 +29,8 @@ public class EndLevelLogic : MonoBehaviour
         players = GameObject.FindGameObjectsWithTag("Player");
 
         UIcanvas = GameObject.FindGameObjectWithTag("UI").GetComponent<UIBehaviour>();
+
+        sounds = GetComponents<AudioSource>();
 
         isCutscene = true;
         openTimer = 44f;
@@ -125,7 +129,7 @@ public class EndLevelLogic : MonoBehaviour
 
                 uiState = "gameplay";
                 UIcanvas.startTimer(60f);
-
+                sounds[0].Play();
             }
         }
 
@@ -143,9 +147,11 @@ public class EndLevelLogic : MonoBehaviour
 
         if (closingTimer < 0 && isClosing)
         {
-            string nextLevel = ScoreBehavior.levels[0];
-            Initiate.Fade(nextLevel, Color.black, 2f);
+            uiState = "nextLevel";
             isClosing = false;
+            
+            Initiate.Fade("Main Menu", Color.black, 2f);
+            sounds[0].Play();
         }
     }
     private void openingScene()

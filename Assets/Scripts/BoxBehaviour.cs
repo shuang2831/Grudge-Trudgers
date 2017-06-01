@@ -117,6 +117,7 @@ public class BoxBehaviour : MonoBehaviour {
                     Debug.Log("box is right");
                     break;
                 }
+                GetComponent<AudioSource>().Play();
                 dirVector = new Vector3(1.5f, 0, 0) ;
                 moving = true;
                 timer = 0.1875f;
@@ -127,6 +128,7 @@ public class BoxBehaviour : MonoBehaviour {
                     Debug.Log("box is right");
                     break;
                 }
+                GetComponent<AudioSource>().Play();
                 dirVector = new Vector3(0, 0, 1.5f);
                 moving = true;
                 timer = 0.1875f;
@@ -137,6 +139,7 @@ public class BoxBehaviour : MonoBehaviour {
                     Debug.Log("box is right");
                     break;
                 }
+                GetComponent<AudioSource>().Play();
                 dirVector = new Vector3(0, 0, -1.5f);
                 moving = true;
                 timer = 0.1875f;
@@ -147,6 +150,7 @@ public class BoxBehaviour : MonoBehaviour {
                     Debug.Log("box is right");
                     break;
                 }
+                GetComponent<AudioSource>().Play();
                 dirVector = new Vector3(-1.5f, 0, 0);
                 moving = true;
                 timer = 0.1875f;
@@ -158,6 +162,7 @@ public class BoxBehaviour : MonoBehaviour {
                 moving = true;
                 break;
         }
+        
     }
 
     private void OnTriggerStay(Collider other)

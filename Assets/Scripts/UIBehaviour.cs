@@ -13,6 +13,11 @@ public class UIBehaviour : MonoBehaviour
     private bool timeEnd;
     private bool countdown;
     public float uiTimer;
+    private AudioSource[] sounds;
+    private AudioClip textMagic;
+    private AudioClip tick;
+    private AudioClip whistle;
+    private float prevSec;
 
     // Reference to the UI's health bar.
     // Use this for initialization
@@ -24,7 +29,11 @@ public class UIBehaviour : MonoBehaviour
         images = GetComponentsInChildren<Image>();
         uiTimer = float.MaxValue;
         //getText("Timer").text = "Timer";
-
+        sounds = GetComponents<AudioSource>();
+        textMagic = (AudioClip)Resources.Load("Sound_Effects/magicspell");
+        tick = (AudioClip)Resources.Load("Sound_Effects/tick");
+        whistle = (AudioClip)Resources.Load("Sound_Effects/ref");
+        prevSec = 0;
     }
 
     // Update is called once per frame
@@ -53,12 +62,19 @@ public class UIBehaviour : MonoBehaviour
                 uiTimer -= Time.deltaTime;
                 getText("Timer").color = new Color(1, (uiTimer / 30), (uiTimer / 30));
                 getText("Timer").text = Mathf.CeilToInt(uiTimer).ToString();
+                if (Mathf.CeilToInt(uiTimer) <  Mathf.CeilToInt(prevSec))
+                {
+                    Debug.Log("tick");
+                    sounds[1].PlayOneShot(tick);
+                    prevSec = uiTimer;
+                }
             } else
             {
                 getText("Timer").color = new Color(1, 1, 1);
                 getText("Timer").text = "END!";
                 getText("tIcon").text = "";
                 getText("Timer").transform.localPosition = new Vector3(0, 244, 0);
+                sounds[1].PlayOneShot(whistle);
             }
         }
         
@@ -113,6 +129,7 @@ public class UIBehaviour : MonoBehaviour
     public void setInstructions(string t, float time = 5.0f)
     {
         getText("Instructions").text = t;
+        sounds[0].PlayOneShot(textMagic);
         Timer = time;
         timeEnd = true;
         StartCoroutine(FadeTextToFullAlpha(1f, getText("Instructions")));
@@ -123,6 +140,7 @@ public class UIBehaviour : MonoBehaviour
     {
         uiTimer = limit;
         countdown = true;
+        prevSec = limit + 1;
     }
 
     public IEnumerator FadeTextToFullAlpha(float t, Text i)

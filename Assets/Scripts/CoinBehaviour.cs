@@ -37,7 +37,7 @@ public class CoinBehaviour : MonoBehaviour {
         {
             if (Vector3.Distance(transform.position, player.transform.position) < 2 && player.GetComponent<PlayerController>().isActive)
             {
-                transform.position = Vector3.MoveTowards(transform.position, player.transform.position, Time.deltaTime * 5);
+                transform.position = Vector3.MoveTowards(transform.position, player.transform.position, Time.deltaTime * 7);
             }
         }
         isColliding = false;
@@ -52,9 +52,10 @@ public class CoinBehaviour : MonoBehaviour {
         isColliding = true;
         if(player.gameObject.tag == "Player" && player.GetComponent<PlayerController>().isActive && !player.GetComponent<Rigidbody>().isKinematic)
         {
+            GetComponent<AudioSource>().Play();
             ScoreBehavior.PlayerScores[player.gameObject.GetComponent<PlayerController>().playerNum - 1] = ScoreBehavior.PlayerScores[player.gameObject.GetComponent<PlayerController>().playerNum - 1] + 1;
             Debug.Log(ScoreBehavior.PlayerScores[player.gameObject.GetComponent<PlayerController>().playerNum - 1]);
-            Destroy(gameObject);
+            Destroy(gameObject, 0.2f);
 
         }
     }

@@ -8,6 +8,7 @@ public class BoxLevelLogic : MonoBehaviour
 {
 
     private GameObject[] players;
+    private AudioSource[] sounds;
     public bool[] playerBehind;
     private int[] numNotNear;
     private bool isCutscene;
@@ -21,7 +22,7 @@ public class BoxLevelLogic : MonoBehaviour
     void Start()
     {
         players = GameObject.FindGameObjectsWithTag("Player");
-
+        sounds = GetComponents<AudioSource>();
         UIcanvas = GameObject.FindGameObjectWithTag("UI").GetComponent<UIBehaviour>();
 
         isCutscene = true;
@@ -160,7 +161,7 @@ public class BoxLevelLogic : MonoBehaviour
                 UIcanvas.startTimer(60f);
                 uiState = "gameplay";
 
-
+                sounds[0].Play();
 
             }
         }
@@ -169,7 +170,7 @@ public class BoxLevelLogic : MonoBehaviour
         {
             isClosing = true;
             uiState = "punish";
-
+            sounds[0].Stop();
         }
 
         if (isClosing)

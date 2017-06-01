@@ -9,6 +9,7 @@ public class BridgeLevelLogic : MonoBehaviour
 
     private GameObject[] players;
     private PlayerController[] playerControllers;
+    private AudioSource[] sounds;
     bool uDied = false;
     private bool isCutscene;
     private bool isClosing;
@@ -22,6 +23,7 @@ public class BridgeLevelLogic : MonoBehaviour
     {
         players = GameObject.FindGameObjectsWithTag("Player");
         UIcanvas = GameObject.FindGameObjectWithTag("UI").GetComponent<UIBehaviour>();
+        sounds = GetComponents<AudioSource>();
         
         isCutscene = true;
         openTimer = 5f;
@@ -91,14 +93,18 @@ public class BridgeLevelLogic : MonoBehaviour
                     player.GetComponent<PlayerController>().enabled = true;
 
                 }
+                UIcanvas.startTimer(30f);
+                uiState = "gameplay";
+                sounds[0].Play();
 
 
             }
         }
 
-       if (UIcanvas.uiTimer <= 0 && !isClosing)
+       if (UIcanvas.uiTimer <= 0 && !isClosing && uiState == "gameplay")
         {
             isClosing = true;
+            sounds[0].Stop();
         }
       
         if (isClosing)
@@ -108,7 +114,15 @@ public class BridgeLevelLogic : MonoBehaviour
 
         if (closingTimer < 0 && isClosing)
         {
-            SceneManager.LoadScene("PickSides Level");
+            uiState = "nextLevel";
+            isClosing = false;
+            ScoreBehavior.levels.RemoveAt(0);
+            if (ScoreBehavior.levels.Count == 0) { Initiate.Fade("End Level", Color.black, 2f); }
+            else
+            {
+                string nextLevel = ScoreBehavior.levels[0];
+                Initiate.Fade(nextLevel, Color.black, 2f);
+            }
         }
 
 

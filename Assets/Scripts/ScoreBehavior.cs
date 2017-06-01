@@ -37,7 +37,8 @@ public static class ScoreBehavior
         "Prisoner Level",
         "Soccer Level",
         "Reward Level",
-        "Blob Level"
+        "Blob Level",
+        "SpikeLevel"
     }).Shuffle();
 
 }

@@ -8,6 +8,7 @@ public class IceLevelLogic : MonoBehaviour
 {
     private GameObject[] players;
     private PlayerController[] playerControllers;
+    private AudioSource[] sounds;
     private bool isCutscene;
     private bool isClosing;
     private float openTimer;
@@ -24,6 +25,8 @@ public class IceLevelLogic : MonoBehaviour
         players = GameObject.FindGameObjectsWithTag("Player");
 
         UIcanvas = GameObject.FindGameObjectWithTag("UI").GetComponent<UIBehaviour>();
+
+        sounds = GetComponents<AudioSource>();
 
         isCutscene = true;
         openTimer = 5f;
@@ -124,7 +127,7 @@ public class IceLevelLogic : MonoBehaviour
                 }
                 UIcanvas.startTimer(30f);
                 uiState = "gameplay";
-
+                sounds[0].Play();
 
 
             }
@@ -144,6 +147,7 @@ public class IceLevelLogic : MonoBehaviour
 
         if (closingTimer < 0 && isClosing)
         {
+            sounds[0].Stop();
             uiState = "nextLevel";
             isClosing = false;
             ScoreBehavior.levels.RemoveAt(0);

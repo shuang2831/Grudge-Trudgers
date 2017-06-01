@@ -110,13 +110,14 @@ public class PlayerController : MonoBehaviour {
         if (xinputHorizontal != 0 || xinputVertical != 0)
         {
             transform.rotation = Quaternion.LookRotation(xinputMovement, Vector3.up);
+            anim.Play("Walk");
         }
         Vector3 xMove = xinputMovement.normalized * speed;
         Vector3 Move = movement.normalized * speed;
 
         if (xMove == Vector3.zero)
         {
-            //anim.Play("Idle");
+            anim.Play("Idle");
         }
 
         if (!slipping)
@@ -135,6 +136,11 @@ public class PlayerController : MonoBehaviour {
     void Update () {
         prevState = state;
         state = GamePad.GetState(playerIndex);
+
+        if (GetComponent<PlayerController>().prevState.Buttons.RightShoulder == ButtonState.Released && GetComponent<PlayerController>().state.Buttons.RightShoulder == ButtonState.Pressed)
+        {
+            GetComponent<AudioSource>().Play();
+        }
 
     }
 

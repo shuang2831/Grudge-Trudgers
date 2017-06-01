@@ -8,6 +8,7 @@ public class PaintLevelLogic : MonoBehaviour
 {
     private GameObject[] players;
     private PlayerController[] playerControllers;
+    private AudioSource[] sounds;
     private bool isCutscene;
     private bool isClosing;
     private float openTimer;
@@ -38,6 +39,7 @@ public class PaintLevelLogic : MonoBehaviour
         scores = new int[] { 0, 0, 0, 0 };
 
         UIcanvas = GameObject.FindGameObjectWithTag("UI").GetComponent<UIBehaviour>();
+        sounds = GetComponents<AudioSource>();
 
         isCutscene = true;
         openTimer = 5f;
@@ -201,7 +203,7 @@ public class PaintLevelLogic : MonoBehaviour
                 }
                 UIcanvas.startTimer(30);
                 uiState = "gameplay";
-
+                sounds[0].Play();
 
 
             }
@@ -211,6 +213,7 @@ public class PaintLevelLogic : MonoBehaviour
         {
             isClosing = true;
             uiState = "punish";
+            sounds[0].Stop();
 
         }
 

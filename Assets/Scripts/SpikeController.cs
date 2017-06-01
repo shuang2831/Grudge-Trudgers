@@ -126,7 +126,7 @@ public class SpikeController : MonoBehaviour {
             collision.gameObject.transform.Translate(0, -95, 0);
             collision.gameObject.GetComponent<PlayerController>().enabled = false;
             collision.gameObject.GetComponent<Rigidbody>().isKinematic = true;
-            collision.gameObject.transform.GetChild(0).Translate(0, -95, 0);
+            collision.gameObject.transform.GetChild(0).transform.localPosition = new Vector3(0, 100, 0);
             collision.gameObject.transform.GetChild(0).GetComponent<Rigidbody>().useGravity = true;
         }
     }

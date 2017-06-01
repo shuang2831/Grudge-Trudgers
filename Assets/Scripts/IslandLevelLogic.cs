@@ -9,6 +9,7 @@ public class IslandLevelLogic : MonoBehaviour
 {
     private GameObject[] players;
     private PlayerController[] playerControllers;
+    private AudioSource[] sounds;
     private bool isCutscene;
     private bool isClosing;
     private float openTimer;
@@ -26,6 +27,7 @@ public class IslandLevelLogic : MonoBehaviour
     {
         players = GameObject.FindGameObjectsWithTag("Player");
         UIcanvas = GameObject.FindGameObjectWithTag("UI").GetComponent<UIBehaviour>();
+        sounds = GetComponents<AudioSource>();
 
         isCutscene = true;
         openTimer = 5f;
@@ -116,7 +118,7 @@ public class IslandLevelLogic : MonoBehaviour
             foreach (GameObject player in players)
             {
 
-                if (scores[player.GetComponent<PlayerController>().playerNum - 1] == maxVotes)
+                if (scores[player.GetComponent<PlayerController>().playerNum - 1] == maxVotes && maxVotes > 0)
                 {
                     player.GetComponent<PlayerController>().lightning.enabled = true;
                     player.GetComponent<PlayerController>().punishPlayerLight();
@@ -167,7 +169,7 @@ public class IslandLevelLogic : MonoBehaviour
 
                 uiState = "gameplay";
                 UIcanvas.startTimer(30f);
-
+                sounds[0].Play();
 
 
             }
@@ -177,6 +179,7 @@ public class IslandLevelLogic : MonoBehaviour
         {
             isClosing = true;
             uiState = "punish";
+            sounds[0].Stop();
 
         }
 

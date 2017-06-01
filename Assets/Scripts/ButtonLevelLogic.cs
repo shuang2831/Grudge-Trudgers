@@ -9,6 +9,7 @@ public class ButtonLevelLogic : MonoBehaviour
 {
     private GameObject[] players;
     private GameObject[] enemies;
+    private AudioSource[] sounds;
    
     private bool isCutscene;
     private bool isClosing;
@@ -31,6 +32,9 @@ public class ButtonLevelLogic : MonoBehaviour
         players = GameObject.FindGameObjectsWithTag("Player");
         //enemy = GameObject.FindGameObjectWithTag("enemy");
         UIcanvas = GameObject.FindGameObjectWithTag("UI").GetComponent<UIBehaviour>();
+
+        sounds = GetComponents<AudioSource>();
+
 
         isCutscene = true;
         openTimer = 5f;
@@ -121,7 +125,7 @@ public class ButtonLevelLogic : MonoBehaviour
                 //enemy.GetComponent<BlobController>().enabled = true;
                 UIcanvas.startTimer(30);
                 uiState = "gameplay";
-
+                sounds[0].Play();
 
 
             }
@@ -131,7 +135,7 @@ public class ButtonLevelLogic : MonoBehaviour
         {
             isClosing = true;
             uiState = "punish";
-
+            sounds[0].Stop();
         }
 
         if (isClosing)

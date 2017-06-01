@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class PickSidesLevelLogic : MonoBehaviour {
     private GameObject[] players;
     private PlayerController[] playerControllers;
+    private AudioSource[] sounds;
     private bool isCutscene;
     private bool isClosing;
     private float openTimer;
@@ -20,6 +21,7 @@ public class PickSidesLevelLogic : MonoBehaviour {
     void Start () {
         players = GameObject.FindGameObjectsWithTag("Player");
         planes = GameObject.FindGameObjectsWithTag("plane");
+        sounds = GetComponents<AudioSource>();
         planes[0].GetComponent<MeshRenderer>().enabled = false;
         planes[1].GetComponent<MeshRenderer>().enabled = false;
         UIcanvas = GameObject.FindGameObjectWithTag("UI").GetComponent<UIBehaviour>();
@@ -53,7 +55,7 @@ public class PickSidesLevelLogic : MonoBehaviour {
 
         }
 
-        if (side == 4)
+        if (side == 4 || side == -4)
         {
             side = 0;
         }
@@ -157,7 +159,7 @@ public class PickSidesLevelLogic : MonoBehaviour {
                 }
                 UIcanvas.startTimer(30f);
                 uiState = "gameplay";
-
+                sounds[0].Play();
                 
 
             }
@@ -167,7 +169,7 @@ public class PickSidesLevelLogic : MonoBehaviour {
         {
             isClosing = true;
             uiState = "punish";
-            
+            sounds[0].Stop();
         }
 
         if (isClosing)

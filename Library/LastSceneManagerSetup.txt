@@ -1,16 +1,4 @@
 sceneSetups:
-<<<<<<< HEAD
-- path: Assets/_Scenes/Reward Level.unity
-=======
-<<<<<<< HEAD
-- path: Assets/_Scenes/Bridge Level.unity
-=======
-<<<<<<< HEAD
-- path: Assets/_Scenes/Backstab Level.unity
-=======
-- path: Assets/_Scenes/SpikeLevel.unity
->>>>>>> e6e345101817f9ae2153eb5e8db77e1810bf8e17
->>>>>>> 19397af249fe894ed7719c5c07f2cfd93b91c88a
->>>>>>> 57d876ee8b976afc151d2d149a1876e9390d8455
+- path: Assets/_Scenes/Box Level.unity
   isLoaded: 1
   isActive: 1

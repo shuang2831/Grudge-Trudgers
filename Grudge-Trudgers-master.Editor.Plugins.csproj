@@ -138,6 +138,7 @@
     <None Include="Assets\Fonts\Lecompte\Lecompte.fnt" />
     <None Include="Assets\LightningBolt\Readme.txt" />
     <None Include="Assets\Simple Scene Fade Load System\ReadMeFirst.txt" />
+    <None Include="Assets\Sounds\Music\Kevin.txt" />
     <None Include="Assets\Standard Assets\Cameras\CameraGuidelines.txt" />
     <None Include="Assets\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
     <None Include="Assets\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />

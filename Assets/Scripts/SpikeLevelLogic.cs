@@ -8,6 +8,7 @@ public class SpikeLevelLogic : MonoBehaviour
 {
 
     private GameObject[] players;
+    private AudioSource[] sounds;
     public bool[] playerBehind;
     private int[] numNotNear;
     private bool isCutscene;
@@ -22,8 +23,9 @@ public class SpikeLevelLogic : MonoBehaviour
     {
         players = GameObject.FindGameObjectsWithTag("Player");
 
-
         UIcanvas = GameObject.FindGameObjectWithTag("UI").GetComponent<UIBehaviour>();
+
+        sounds = GetComponents<AudioSource>();
 
         isCutscene = true;
         openTimer = 5f;
@@ -109,7 +111,7 @@ public class SpikeLevelLogic : MonoBehaviour
                 }
                 UIcanvas.startTimer(30f);
                 uiState = "gameplay";
-
+                sounds[0].Play();
 
 
             }
@@ -128,6 +130,7 @@ public class SpikeLevelLogic : MonoBehaviour
 
         if (closingTimer < 0 && isClosing)
         {
+            sounds[0].Stop();
             uiState = "nextLevel";
             isClosing = false;
             ScoreBehavior.levels.RemoveAt(0);

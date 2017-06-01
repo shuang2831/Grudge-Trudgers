@@ -8,6 +8,7 @@ public class BackstabLevelLogic : MonoBehaviour
 {
 
     private GameObject[] players;
+    private AudioSource[] sounds;
     public bool[] playerBehind;
     private int[] numNotNear;
     private bool isCutscene;
@@ -17,10 +18,14 @@ public class BackstabLevelLogic : MonoBehaviour
     private string uiState;
     private UIBehaviour UIcanvas;
 
+    private AudioClip stab;
+    private AudioClip footsteps;
+
     // Use this for initialization
     void Start()
     {
         players = GameObject.FindGameObjectsWithTag("Player");
+        sounds = GetComponents<AudioSource>();
         playerBehind = new bool[] { false, false, false, false };
         numNotNear = new int[] { 3, 3, 3, 3 };
 
@@ -29,8 +34,12 @@ public class BackstabLevelLogic : MonoBehaviour
         isCutscene = true;
         openTimer = 5f;
         closingTimer = 5f;
-        openingScene();
         uiState = "begin";
+
+        stab = (AudioClip)Resources.Load("Sound_Effects/stab");
+        footsteps = (AudioClip)Resources.Load("Sound_Effects/foot2");
+
+        openingScene();
     }
 
     // Update is called once per frame
@@ -69,11 +78,14 @@ public class BackstabLevelLogic : MonoBehaviour
                     {
                         if (hit.transform.gameObject.GetComponent<PlayerController>().prevState.Buttons.A == ButtonState.Released && hit.transform.gameObject.GetComponent<PlayerController>().state.Buttons.A == ButtonState.Pressed)
                         {
+                           
+                            sounds[1].PlayOneShot(stab);
                             hit.transform.gameObject.GetComponent<PlayerController>().isActive = false;
                             player.GetComponent<PlayerController>().punishPlayer();
                             player.GetComponent<PlayerController>().enabled = false;
                             player.GetComponent<Rigidbody>().isKinematic = true;
                             player.transform.Translate(0, -95, 0);
+                            player.transform.GetChild(0).transform.localPosition = new Vector3(0, 100, 0);
                             player.transform.GetChild(0).GetComponent<Rigidbody>().useGravity = true;
 
 
@@ -135,6 +147,7 @@ public class BackstabLevelLogic : MonoBehaviour
             {
                 uiState = "text2";
                 UIcanvas.setInstructions("Watch your back...");
+                sounds[1].Stop();
 
             }
 
@@ -149,6 +162,7 @@ public class BackstabLevelLogic : MonoBehaviour
                 }
                 UIcanvas.startTimer(30f);
                 uiState = "gameplay";
+                sounds[0].Play();
 
 
 
@@ -159,6 +173,7 @@ public class BackstabLevelLogic : MonoBehaviour
         {
             isClosing = true;
             uiState = "punish";
+            sounds[0].Stop();
         }
 
         if (isClosing)
@@ -186,6 +201,8 @@ public class BackstabLevelLogic : MonoBehaviour
         {
             //player.GetComponent<PlayerController>().lightning.enabled = false;
             player.GetComponent<PlayerController>().enabled = false;
+            Debug.Log(footsteps);
+            sounds[1].PlayOneShot(footsteps);
 
             //enemy.GetComponent<BlobController>().enabled = false;
 

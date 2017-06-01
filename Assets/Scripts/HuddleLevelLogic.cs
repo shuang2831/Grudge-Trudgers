@@ -8,6 +8,7 @@ public class HuddleLevelLogic : MonoBehaviour
 {
     private GameObject[] players;
     private PlayerController[] playerControllers;
+    private AudioSource[] sounds;
     private bool isCutscene;
     private bool isClosing;
     private float openTimer;
@@ -24,6 +25,8 @@ public class HuddleLevelLogic : MonoBehaviour
         players = GameObject.FindGameObjectsWithTag("Player");
         
         UIcanvas = GameObject.FindGameObjectWithTag("UI").GetComponent<UIBehaviour>();
+
+        sounds = GetComponents<AudioSource>();
 
         isCutscene = true;
         openTimer = 5f;
@@ -156,7 +159,7 @@ public class HuddleLevelLogic : MonoBehaviour
                 }
                 UIcanvas.startTimer(30f);
                 uiState = "gameplay";
-
+                sounds[0].Play();
 
 
             }
@@ -178,6 +181,7 @@ public class HuddleLevelLogic : MonoBehaviour
         {
             uiState = "nextLevel";
             isClosing = false;
+            sounds[0].Stop();
             ScoreBehavior.levels.RemoveAt(0);
             if (ScoreBehavior.levels.Count == 0) { Initiate.Fade("End Level", Color.black, 2f); }
             else

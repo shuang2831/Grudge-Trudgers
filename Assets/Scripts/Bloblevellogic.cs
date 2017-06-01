@@ -9,6 +9,7 @@ public class Bloblevellogic : MonoBehaviour
 
     private GameObject[] players;
     private PlayerController[] playerControllers;
+    private AudioSource[] sounds;
     private GameObject enemy;
     bool uDied = false;
     private bool isCutscene;
@@ -22,6 +23,7 @@ public class Bloblevellogic : MonoBehaviour
     void Start()
     {
         players = GameObject.FindGameObjectsWithTag("Player");
+        sounds = GetComponents<AudioSource>();
         enemy = GameObject.FindGameObjectWithTag("enemy");
         UIcanvas = GameObject.FindGameObjectWithTag("UI").GetComponent<UIBehaviour>();
         
@@ -49,6 +51,7 @@ public class Bloblevellogic : MonoBehaviour
         if (total >= 4)
         {
             uDied = true;
+            UIcanvas.uiTimer = -1;
             //endfunction something
         }
     }
@@ -69,12 +72,6 @@ public class Bloblevellogic : MonoBehaviour
 
             openTimer -= Time.deltaTime;
 
-            //if (openTimer < 8 && uiState == "begin")
-            //{
-            //    uiState = "text1";
-            //    UIcanvas.setInstructions("Watch out for the blob! It will grow and grow while chasing the closest player. ");
-
-            //}
 
             if (openTimer < 3 && uiState == "begin")
             {
@@ -95,6 +92,7 @@ public class Bloblevellogic : MonoBehaviour
 
                 enemy.GetComponent<BlobController>().enabled = true;
 
+                sounds[0].Play();
                 uiState = "gameplay";
                 UIcanvas.startTimer(30f);
 
@@ -105,6 +103,7 @@ public class Bloblevellogic : MonoBehaviour
         {
             isClosing = true;
             enemy.GetComponent<BlobController>().die();
+            sounds[0].Stop();
         }
       
         if (isClosing)

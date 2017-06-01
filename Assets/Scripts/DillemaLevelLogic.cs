@@ -9,6 +9,7 @@ public class DillemaLevelLogic : MonoBehaviour
 {
     private GameObject[] players;
     private PlayerController[] playerControllers;
+    private AudioSource[] sounds;
     private bool isCutscene;
     private bool isClosing;
     private float openTimer;
@@ -27,7 +28,7 @@ public class DillemaLevelLogic : MonoBehaviour
     {
         players = GameObject.FindGameObjectsWithTag("Player");
         UIcanvas = GameObject.FindGameObjectWithTag("UI").GetComponent<UIBehaviour>();
-
+        sounds = GetComponents<AudioSource>();
         isCutscene = true;
         openTimer = 10f;
         closingTimer = 10f;
@@ -158,7 +159,7 @@ public class DillemaLevelLogic : MonoBehaviour
 
                 UIcanvas.startTimer(15);
                 uiState = "gameplay";
-
+                sounds[0].Play();
 
 
             }
@@ -168,7 +169,7 @@ public class DillemaLevelLogic : MonoBehaviour
         {
             isClosing = true;
             uiState = "punish";
-
+            sounds[0].Stop();
         }
 
         if (isClosing)

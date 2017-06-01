@@ -6,6 +6,7 @@ public class MazeLevelLogic : MonoBehaviour {
 
     private GameObject[] players;
     private Light[] lights;
+    private AudioSource[] sounds;
     private PlayerController[] playerControllers;
     private bool isCutscene;
     private bool isClosing;
@@ -20,7 +21,7 @@ public class MazeLevelLogic : MonoBehaviour {
         players = GameObject.FindGameObjectsWithTag("Player");
         //lights = Light.FindGameObjectsWithTag("playerLight");
         UIcanvas = GameObject.FindGameObjectWithTag("UI").GetComponent<UIBehaviour>();
-
+        sounds = GetComponents<AudioSource>();
         isCutscene = true;
         openTimer = 8f;
         closingTimer = 5f;
@@ -118,6 +119,7 @@ public class MazeLevelLogic : MonoBehaviour {
                 }
                 UIcanvas.startTimer(45f);
                 uiState = "gameplay";
+                sounds[0].Play();
 
 
 
@@ -128,7 +130,7 @@ public class MazeLevelLogic : MonoBehaviour {
         {
             isClosing = true;
             uiState = "punish";
-
+            sounds[0].Stop();
         }
 
         if (isClosing)
