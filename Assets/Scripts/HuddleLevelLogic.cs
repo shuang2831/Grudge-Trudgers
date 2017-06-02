@@ -98,6 +98,7 @@ public class HuddleLevelLogic : MonoBehaviour
                         fTimer[player.GetComponent<PlayerController>().playerNum - 1] -= Time.deltaTime;
                         Color newColor = new Color(fTimer[player.GetComponent<PlayerController>().playerNum - 1] / 2f, fTimer[player.GetComponent<PlayerController>().playerNum - 1] / 2f, 1f);
                         player.GetComponentInChildren<SkinnedMeshRenderer>().material.SetColor("_Color", newColor);
+                        
                     }
                     else
                     {
@@ -107,6 +108,7 @@ public class HuddleLevelLogic : MonoBehaviour
 
                     if (fTimer[player.GetComponent<PlayerController>().playerNum - 1] < 0)
                     {
+                        sounds[1].PlayOneShot((AudioClip)Resources.Load("Sound_Effects/ice"));
                         player.GetComponent<PlayerController>().punishPlayer();
                         frozen[player.GetComponent<PlayerController>().playerNum - 1] = true;
                         player.transform.Find("Cube").gameObject.GetComponent<MeshRenderer>().enabled = true;
@@ -169,6 +171,7 @@ public class HuddleLevelLogic : MonoBehaviour
         {
             isClosing = true;
             uiState = "punish";
+            sounds[0].Stop();
 
         }
 
@@ -181,7 +184,6 @@ public class HuddleLevelLogic : MonoBehaviour
         {
             uiState = "nextLevel";
             isClosing = false;
-            sounds[0].Stop();
             ScoreBehavior.levels.RemoveAt(0);
             if (ScoreBehavior.levels.Count == 0) { Initiate.Fade("End Level", Color.black, 2f); }
             else
@@ -197,7 +199,7 @@ public class HuddleLevelLogic : MonoBehaviour
         {
             //player.GetComponent<PlayerController>().lightning.enabled = false;
             player.GetComponent<PlayerController>().enabled = false;
-
+            sounds[1].PlayOneShot((AudioClip)Resources.Load("Sound_Effects/foot2"));
             //enemy.GetComponent<BlobController>().enabled = false;
 
         }

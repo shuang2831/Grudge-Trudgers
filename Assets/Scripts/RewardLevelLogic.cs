@@ -43,26 +43,10 @@ public class RewardLevelLogic : MonoBehaviour
     void Update()
     {
 
-        side = 0;
-
-        foreach (GameObject player in players)
+        if (chosen[0] && chosen[1] && chosen[2] && chosen[3])
         {
-            if (player.transform.position.x <= 0)
-            {
-                side = side - 1;
-            }
-            else
-            {
-                side = side + 1;
-            }
-
+            UIcanvas.uiTimer = -1;
         }
-
-        if (side == 4)
-        {
-            side = 0;
-        }
-
 
 
         if (uiState == "gameplay")
@@ -119,9 +103,8 @@ public class RewardLevelLogic : MonoBehaviour
             foreach (GameObject player in players)
             {
 
-                if (scores[player.GetComponent<PlayerController>().playerNum - 1] == maxVotes)
+                if (scores[player.GetComponent<PlayerController>().playerNum - 1] == maxVotes && maxVotes > 0)
                 {
-                    player.GetComponent<PlayerController>().lightning.enabled = true;
                     player.GetComponent<PlayerController>().rewardPlayer(10);
                 }
 

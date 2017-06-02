@@ -9,6 +9,7 @@ public class ButtonBehaviour : MonoBehaviour {
     private GameObject[] players;
     private bool nearby;
     public GameObject enemy;                // The enemy prefab to be spawned.
+    private int blobCount;
 
     // Use this for initialization
     void Start () {
@@ -26,11 +27,16 @@ public class ButtonBehaviour : MonoBehaviour {
                 {
                     if (player.GetComponent<PlayerController>().prevState.Buttons.A == ButtonState.Released && player.gameObject.GetComponent<PlayerController>().state.Buttons.A == ButtonState.Pressed)
                     {
+                        GetComponent<AudioSource>().Play();
                         Vector3 p = new Vector3(Random.Range(-5.0f, 5.0f), 0, Random.Range(-5.0f, 5.0f));
                         for (int i = 0; i < 4; i++)
                         {
-                            Instantiate(enemy, p, Quaternion.identity);
+                            if (blobCount < 75)
+                            {
+                                Instantiate(enemy, p, Quaternion.identity);
+                            }
                         }
+                        blobCount++;
                     }
                 }
             

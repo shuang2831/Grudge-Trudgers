@@ -79,14 +79,14 @@ public class WindController : MonoBehaviour {
             if (ps.isPlaying)
             {
                 ps.Stop();
-                //Debug.Log(string.Format( "Cannon Stopped"));
-                Debug.Log(string.Format("IsPlaying?: {0}", ps.isPlaying));
+                Debug.Log(string.Format( "Cannon Stopped"));
+                
             }
             else
             {
                 ps.Play();
                 //Debug.Log(string.Format("Cannon Started"));
-                Debug.Log(string.Format("IsPlaying?: {0}", ps.isPlaying));
+                
 
             }
             yield return new WaitForSecondsRealtime(3.5f);
@@ -99,7 +99,7 @@ public class WindController : MonoBehaviour {
         {
            
             collision.gameObject.transform.Translate(-Vector3.forward * Time.deltaTime * 9.0f,Space.World);
-            //Debug.Log(-Vector3.forward);
+            
            
         }
     }

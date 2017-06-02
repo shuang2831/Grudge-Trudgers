@@ -37,7 +37,24 @@ public class SpikeLevelLogic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameObject.FindGameObjectWithTag("goal").GetComponent<GoalLogic>().finish)
+        {
+            UIcanvas.uiTimer = -1;
+        }
 
+        int total = 0;
+        foreach (GameObject player in players)
+        {
+            if (player.transform.position.y < -4)
+            {
+                total++;
+            }
+        }
+
+        if (total >= 4)
+        {
+            UIcanvas.uiTimer = -1;
+        }
     }
 
     void FixedUpdate()
@@ -121,6 +138,7 @@ public class SpikeLevelLogic : MonoBehaviour
         {
             isClosing = true;
             uiState = "punish";
+            sounds[0].Stop();
         }
 
         if (isClosing)
@@ -130,7 +148,7 @@ public class SpikeLevelLogic : MonoBehaviour
 
         if (closingTimer < 0 && isClosing)
         {
-            sounds[0].Stop();
+            
             uiState = "nextLevel";
             isClosing = false;
             ScoreBehavior.levels.RemoveAt(0);
@@ -149,7 +167,7 @@ public class SpikeLevelLogic : MonoBehaviour
         {
             //player.GetComponent<PlayerController>().lightning.enabled = false;
             player.GetComponent<PlayerController>().enabled = false;
-
+            sounds[1].PlayOneShot((AudioClip)Resources.Load("Sound_Effects/foot2"));
             //enemy.GetComponent<BlobController>().enabled = false;
 
         }

@@ -64,7 +64,7 @@ public class UIBehaviour : MonoBehaviour
                 getText("Timer").text = Mathf.CeilToInt(uiTimer).ToString();
                 if (Mathf.CeilToInt(uiTimer) <  Mathf.CeilToInt(prevSec))
                 {
-                    Debug.Log("tick");
+                    //Debug.Log("tick");
                     sounds[1].PlayOneShot(tick);
                     prevSec = uiTimer;
                 }
@@ -119,7 +119,7 @@ public class UIBehaviour : MonoBehaviour
         Timer = 30;
         timeEnd = true;
         getText("closingResults").enabled = true;
-        getText("closingResults").text = "Gold Count: \n \n Player 1: " + oneScore + " \n Player 2: " + twoScore + "\n Player 3: " + threeScore + " \n Player 4: " + fourScore;
+        getText("closingResults").text = "Gold Count: \n \n Player 1: " + oneScore + " \n Player 2: " + twoScore + "\n Player 3: " + threeScore + " \n Player 4: " + fourScore + "\n \n Thanks for playing!  ~Stan, Alex, and Didi \n \n Music from incompetech.com (Kevin Macleod)";
         getImage("bImage").enabled = true;
         StartCoroutine(FadeTextToFullAlpha(3f, getText("closingResults")));
 

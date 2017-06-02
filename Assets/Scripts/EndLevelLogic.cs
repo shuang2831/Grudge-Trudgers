@@ -128,7 +128,7 @@ public class EndLevelLogic : MonoBehaviour
 
 
                 uiState = "gameplay";
-                UIcanvas.startTimer(60f);
+                UIcanvas.startTimer(30f);
                 sounds[0].Play();
             }
         }

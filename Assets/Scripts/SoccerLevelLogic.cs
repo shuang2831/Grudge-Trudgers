@@ -123,7 +123,7 @@ public class SoccerLevelLogic : MonoBehaviour
         {
             isClosing = true;
             uiState = "punish";
-
+            sounds[0].Stop();
         }
 
         if (isClosing)
@@ -133,7 +133,7 @@ public class SoccerLevelLogic : MonoBehaviour
 
         if (closingTimer < 0 && isClosing)
         {
-            sounds[0].Stop();
+            
             uiState = "nextLevel";
             isClosing = false;
             ScoreBehavior.levels.RemoveAt(0);

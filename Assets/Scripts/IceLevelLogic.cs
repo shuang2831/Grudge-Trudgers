@@ -43,9 +43,14 @@ public class IceLevelLogic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameObject.FindGameObjectWithTag("goal").GetComponent<GoalLogic>().finish)
+        {
+            UIcanvas.uiTimer = -1;
+        }
+
         foreach (GameObject player in players)
         {
-            if (player.transform.position.z > -10 && (player.transform.position.z < 10))
+            if (player.transform.position.z > -13 && (player.transform.position.z < 13))
             {
                 if (player.GetComponent<Rigidbody>().velocity.x < 0.5 && player.GetComponent<Rigidbody>().velocity.z < 0.5 && player.GetComponent<Rigidbody>().velocity.x > -0.5 && player.GetComponent<Rigidbody>().velocity.z > -0.5)
                 {
@@ -125,7 +130,7 @@ public class IceLevelLogic : MonoBehaviour
                     player.GetComponent<PlayerController>().enabled = true;
 
                 }
-                UIcanvas.startTimer(30f);
+                UIcanvas.startTimer(45f);
                 uiState = "gameplay";
                 sounds[0].Play();
 
@@ -137,6 +142,7 @@ public class IceLevelLogic : MonoBehaviour
         {
             isClosing = true;
             uiState = "punish";
+            sounds[0].Stop();
 
         }
 
@@ -147,7 +153,7 @@ public class IceLevelLogic : MonoBehaviour
 
         if (closingTimer < 0 && isClosing)
         {
-            sounds[0].Stop();
+            
             uiState = "nextLevel";
             isClosing = false;
             ScoreBehavior.levels.RemoveAt(0);

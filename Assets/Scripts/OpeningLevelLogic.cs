@@ -90,7 +90,7 @@ public class OpeningLevelLogic : MonoBehaviour
                     player.GetComponent<PlayerController>().enabled = true;
 
                 }
-                UIcanvas.startTimer(15f);
+                UIcanvas.startTimer(20f);
                 uiState = "gameplay";
 
 

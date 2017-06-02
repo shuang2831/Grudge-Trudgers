@@ -31,7 +31,7 @@ public class DillemaLevelLogic : MonoBehaviour
         sounds = GetComponents<AudioSource>();
         isCutscene = true;
         openTimer = 10f;
-        closingTimer = 10f;
+        closingTimer = 5f;
         openingScene();
         uiState = "begin";
 
@@ -42,6 +42,10 @@ public class DillemaLevelLogic : MonoBehaviour
     void Update()
     {
 
+        if (chosen[0] && chosen[1] && chosen[2] && chosen[3])
+        {
+            UIcanvas.uiTimer = -1;
+        }
 
         if (uiState == "gameplay")
         {
@@ -100,6 +104,11 @@ public class DillemaLevelLogic : MonoBehaviour
 
 
                 }
+            }
+            else if (choices[1] == 0 && choices[0] == 0)
+            {
+
+                
             }
             else
             {

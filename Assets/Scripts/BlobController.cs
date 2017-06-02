@@ -155,7 +155,7 @@ public class BlobController : MonoBehaviour {
         {
             if (transform.localScale.x > 0.5)
             {
-                transform.localScale -= new Vector3(0.005F, 0.005F, 0.005F);
+                transform.localScale -= new Vector3(0.006F, 0.006F, 0.006F);
                 rb.mass -= 0.1f;
                 moveSpeed = 1.0f;
                 renderer.material.color = colors[1];
@@ -163,7 +163,7 @@ public class BlobController : MonoBehaviour {
         }
         else
         {
-            transform.localScale += new Vector3(0.003F, 0.003F, 0.003F);
+            transform.localScale += new Vector3(0.005F, 0.005F, 0.005F);
             rb.mass += 0.15f;
             moveSpeed = 4.0f;
             renderer.material.color = chosenColor;

@@ -38,14 +38,17 @@ public class MazeLevelLogic : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        
+        if (GameObject.FindGameObjectWithTag("goal").GetComponent<GoalLogic>().finish)
+        {
+            UIcanvas.uiTimer = -1;
+        }
     }
 
     void FixedUpdate()
     {
         foreach (GameObject player in players)
         {
-            Debug.Log(player.GetComponent<PlayerController>().isClose);
+            
             int numClose = 1;
             
             for (int i = 0; i < 4; i++)
@@ -117,7 +120,7 @@ public class MazeLevelLogic : MonoBehaviour {
                     player.GetComponent<PlayerController>().enabled = true;
 
                 }
-                UIcanvas.startTimer(45f);
+                UIcanvas.startTimer(60f);
                 uiState = "gameplay";
                 sounds[0].Play();
 

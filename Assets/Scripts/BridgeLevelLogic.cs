@@ -27,7 +27,7 @@ public class BridgeLevelLogic : MonoBehaviour
         
         isCutscene = true;
         openTimer = 5f;
-        closingTimer = 10f;
+        closingTimer = 5f;
         openingScene();
         uiState = "begin";
 
@@ -36,7 +36,10 @@ public class BridgeLevelLogic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (GameObject.FindGameObjectWithTag("goal").GetComponent<GoalLogic>().finish)
+        {
+            UIcanvas.uiTimer = -1;
+        }
         int total = 0;
         foreach (GameObject player in players)
         {
@@ -48,8 +51,7 @@ public class BridgeLevelLogic : MonoBehaviour
 
         if (total >= 4)
         {
-            uDied = true;
-            //endfunction something
+            UIcanvas.uiTimer = -1;
         }
     }
 
@@ -58,7 +60,7 @@ public class BridgeLevelLogic : MonoBehaviour
 
         if (isCutscene)
         {
-            if (openTimer > 2)
+            if (openTimer > 3)
             {
                 foreach (GameObject player in players)
                 {
@@ -70,7 +72,7 @@ public class BridgeLevelLogic : MonoBehaviour
 
             openTimer -= Time.deltaTime;
 
-            if (openTimer < 2 && uiState == "begin")
+            if (openTimer < 3 && uiState == "begin")
             {
                 uiState = "text1";
                 UIcanvas.setInstructions("Cross the Bridge and don't be blown off.");

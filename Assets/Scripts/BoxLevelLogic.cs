@@ -35,6 +35,10 @@ public class BoxLevelLogic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameObject.FindGameObjectWithTag("goal").GetComponent<GoalLogic>().finish)
+        {
+            UIcanvas.uiTimer = -1;
+        }
 
         if (uiState == "gameplay")
         {

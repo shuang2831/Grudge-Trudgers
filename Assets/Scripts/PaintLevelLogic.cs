@@ -53,7 +53,7 @@ public class PaintLevelLogic : MonoBehaviour
         colors1 = new Color32[100];
         for (int i = 0; i < 100; i++)
         {
-            colors1[i] = Color.blue;
+            colors1[i] = Color.cyan;
         }
         colors2 = new Color32[100];
         for (int i = 0; i < 100; i++)
@@ -102,7 +102,7 @@ public class PaintLevelLogic : MonoBehaviour
 
             foreach (Color32 col in texColors)
             {
-                if (col == Color.blue)
+                if (col == Color.cyan)
                 {
                     scores[0] = scores[0] + 1;
                 }
